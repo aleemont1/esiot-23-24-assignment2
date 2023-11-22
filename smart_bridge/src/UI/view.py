@@ -42,25 +42,25 @@ def configure_static_elements(root):
 #these elements are modified by serialLine
 def configure_dynamic_elements(root):
     global wash_counter
-    global status
-    global currentTemperature
-    global message
+    global progress_status #status of the washing (wasing, checkin, checkout etc...)
+    global current_temperature
+    global ui_message
 
     wash_counter=tk.StringVar()
-    status = tk.StringVar()
-    currentTemperature = tk.StringVar()
-    message=tk.StringVar()
+    progress_status = tk.StringVar()
+    current_temperature = tk.StringVar()
+    ui_message=tk.StringVar()
     
 
     wash_counter.set("counter")
-    status.set("washing state")
-    currentTemperature.set("20")
-    message.set("message")
+    progress_status.set("washing state")
+    current_temperature.set("20")
+    ui_message.set("message")
 
     dynamic_elements = [
         (tk.Label, wash_counter, 1),
-        (tk.Label, status, 4),
-        (tk.Label, currentTemperature, 5),
+        (tk.Label, progress_status, 4),
+        (tk.Label, current_temperature, 5),
         (tk.Label, message, 6)
     ]
 
@@ -83,7 +83,9 @@ def show_button(): #show button when an error occured
 
 def maintenance_done_click():
     hide_button()
-    #TODO: do the rest part after button click: input on serial line to restart arduino
+
+    packet_to_send="mnt:done" #mnt stands for maintenance
+    send_packet(packet_to_send)
 
 def build_interface():
     global button
@@ -108,21 +110,21 @@ def check_packet(decoded_packet):
 
     if message_type=="err":
         show_button()
-        pass #TODO: call function handle_error(), do the same with other elif.
-    elif message_type=="sts":
-        status.set(message)
-    elif message_type=="cnt":
-        pass #TODO
+    elif message_type=="sts": #washing state
+        progress_status.set(message)
+    elif message_type=="cnt": #wash_counter
+        wash_counter.set(message)
     elif message_type=="out":
-        pass #TODO
-    elif message_type=="":
-        pass #TODO
+        ui_message.set(message)
+    elif message_type=="tmp":
+        current_temperature.set(message)
+
 
 '''
 Send a packet to arduino formatted in a certain way
 '''
 def send_packet(packet):
-    pass
+    print("TODO: invio un messaggio sulla seriale ad arduino")
 
 
 def update_serial():

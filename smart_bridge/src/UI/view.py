@@ -61,7 +61,7 @@ def configure_dynamic_elements(root):
         (tk.Label, wash_counter, 1),
         (tk.Label, progress_status, 4),
         (tk.Label, current_temperature, 5),
-        (tk.Label, message, 6)
+        (tk.Label, ui_message, 6)
     ]
 
     for element_type, text_var, row in dynamic_elements:

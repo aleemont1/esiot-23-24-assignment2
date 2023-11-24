@@ -18,9 +18,9 @@ message_type:  err=error, out=output, tmp=temperature, sts=status, cnt=counter
 def create_main_window():
     root = tk.Tk()
     root.title("Car Washing Dashboard")
-    root.geometry("500x500")
+    root.geometry("600x600")
     root.configure(bg='lightblue')
-    root.resizable(False, False)
+    root.resizable(True, True)
     return root
 
 

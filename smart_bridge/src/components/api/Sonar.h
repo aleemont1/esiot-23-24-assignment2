@@ -111,7 +111,7 @@ private:
     /**
      * @brief Constant representing no object detected by the sonar sensor.
      */
-    static const float NO_OBJECT_DETECTED = -1.0f;
+    static constexpr float NO_OBJECT_DETECTED = -1.0f;
 };
 
 #endif // __SONAR__

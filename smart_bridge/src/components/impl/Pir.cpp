@@ -1,4 +1,4 @@
-#include "Pir.h"
+#include "../api/Pir.h"
 #include "config/config.h"
 #include "Arduino.h"
 

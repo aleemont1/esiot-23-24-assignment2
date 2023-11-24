@@ -1,6 +1,9 @@
 #ifndef __CONFIG__
 #define __CONFIG__
 
+//DEBUG
+//#define __DEBUG
+
 // LED
 #define L1_PIN 7 // Green diode led
 #define L2_PIN 6 // Red diode led

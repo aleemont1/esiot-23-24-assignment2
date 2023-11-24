@@ -66,7 +66,7 @@ private:
      * @brief The default temperature setting in degrees Celsius.
      *
      */
-    static const float DEFAULT_TEMPERATURE = 20.0f;
+    static constexpr float DEFAULT_TEMPERATURE = 20.0f;
 
     /**
      * @brief The speed of sound in air in meters per second at 20 degrees Celsius.

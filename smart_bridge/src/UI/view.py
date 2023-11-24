@@ -18,9 +18,9 @@ message_type:  err=error, out=output, tmp=temperature, sts=status, cnt=counter
 def create_main_window():
     root = tk.Tk()
     root.title("Car Washing Dashboard")
-    root.geometry("500x500")
+    root.geometry("600x600")
     root.configure(bg='lightblue')
-    root.resizable(False, False)
+    root.resizable(True, True)
     return root
 
 
@@ -61,7 +61,7 @@ def configure_dynamic_elements(root):
         (tk.Label, wash_counter, 1),
         (tk.Label, progress_status, 4),
         (tk.Label, current_temperature, 5),
-        (tk.Label, message, 6)
+        (tk.Label, ui_message, 6)
     ]
 
     for element_type, text_var, row in dynamic_elements:

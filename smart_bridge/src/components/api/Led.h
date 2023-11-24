@@ -6,8 +6,8 @@
 class Led: public Light { 
 public:
   Led(int pin);
-  void on();
-  void off();    
+  void switchOn();
+  void switchOff();    
 protected:
   int pin;  
 };

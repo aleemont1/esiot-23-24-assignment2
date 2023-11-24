@@ -6,10 +6,10 @@ Led::Led(int pin){
   pinMode(pin,OUTPUT);
 }
 
-void Led::on(){
+void Led::switchOn(){
   digitalWrite(pin,HIGH);
 }
 
-void Led::off(){
+void Led::switchOff(){
   digitalWrite(pin,LOW);
 };

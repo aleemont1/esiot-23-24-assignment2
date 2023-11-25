@@ -1,57 +1,30 @@
 #include "Scheduler.h"
 #include <TimerOne.h>
 
-volatile bool timerFlag = false;
+Scheduler::Scheduler() : numTasks(0), lastMillis(0) {}
 
-void timeHandler(void)
-{
-    timerFlag = true;
+void Scheduler::init(int intervalMillis) {
+  // Set up the interval for the scheduler
+  // You may want to use a timer or other mechanisms for more accurate timing
+  // For simplicity, using millis() in this example
+  this->intervalMillis = intervalMillis;
+  lastMillis = millis() - intervalMillis;
 }
 
-void Scheduler::init(int period)
-{
-    this->period = period;
-    timerFlag = false;
-    long u_period = 1000L * period;
-    Timer1.initialize(u_period);
-    Timer1.attachInterrupt(timeHandler);
-    this->numTasks = 0;
-}
-
-bool Scheduler::addTask(Task *task)
-{
-    if (this->numTasks < MAX_TASKS - 1)
-    {
-        this->tasks[this->numTasks++] = task;
-        return true;
+void Scheduler::addTask(Task *task) {
+    if (numTasks < sizeof(tasks) / sizeof(tasks[0])) {
+        tasks[numTasks++] = task;
     }
-    return false;
 }
 
-void Scheduler::schedule()
-{
-    while (!timerFlag);
-    timerFlag = false;
-
-    for (int i = 0; i < this->numTasks; i++)
-    {
-        if (this->tasks[i]->isActive())
-        {
-            if (this->tasks[i]->isPeriodic())
-            {
-                if (this->tasks[i]->updateAndCheckTime(this->period))
-                {
-                    this->tasks[i]->tick();
-                }
-            }
-            else
-            {
-                this->tasks[i]->tick();
-            }
-            if (this->tasks[i]->isCompleted())
-            {
-                this->tasks[i]->setActive(false);
-            }
-        }
+void Scheduler::schedule() {
+  unsigned long currentMillis = millis();
+  if (currentMillis - lastMillis >= intervalMillis) { // Adjust the interval as needed
+    for (int i = 0; i < numTasks; ++i) {
+      if (tasks[i] != nullptr && tasks[i]->isActive()) {
+        tasks[i]->tick();
+      }
     }
+    lastMillis = currentMillis;
+  }
 }

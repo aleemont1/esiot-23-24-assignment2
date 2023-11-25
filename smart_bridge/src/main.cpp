@@ -2,17 +2,17 @@
 #include "kernel/Scheduler.h"
 #include "tasks/CheckInTask.h"
 
-Scheduler *scheduler = new Scheduler();
+Scheduler scheduler;
 
 void setup()
 {
     Serial.begin(9600);
-    scheduler->init(1900);
+    scheduler.init(100);
     CheckInTask *checkInTask = new CheckInTask();
-    checkInTask->init();
+    checkInTask->init(2100);
     checkInTask->setActive(true);
 
-    if (scheduler->addTask(checkInTask))
+    if (scheduler.addTask(checkInTask))
     {
         Serial.println("Task added");
     }
@@ -24,5 +24,5 @@ void setup()
 
 void loop()
 {
-    scheduler->schedule();
+    scheduler.schedule();
 }

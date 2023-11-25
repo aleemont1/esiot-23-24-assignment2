@@ -60,7 +60,7 @@ private:
      * @brief The number of microseconds converted in a second
      *
      */
-    const int MICROSECONDS_IN_SECOND = 1000000;
+    const long MICROSECONDS_IN_SECOND = 1000000L;
 
     /**
      * @brief The default temperature setting in degrees Celsius.

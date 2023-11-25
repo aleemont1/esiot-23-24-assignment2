@@ -24,14 +24,14 @@ public:
 
     /**
      * @brief Check if the button is pressed.
-     * 
+     *
      * @return true if the button is pressed, false otherwise.
      */
     virtual bool checkButtonPressStatus() = 0;
 
     /**
      * @brief Check if the button is released.
-     * 
+     *
      * @return true if the button is released, false otherwise.
      */
     virtual bool checkButtonReleaseStatus() = 0;
@@ -43,7 +43,7 @@ public:
 
     /**
      * @brief Retrieves the last time the button state was synchronized.
-     * 
+     *
      * @return The last synchronization time.
      */
     long retrieveLastButtonSyncTime();
@@ -51,7 +51,7 @@ public:
 protected:
     /**
      * @brief Set the last synchronization time.
-     * 
+     *
      * @param time The new synchronization time.
      */
     void setLastButtonSyncTime(long time);

@@ -7,10 +7,6 @@
     - Thw washing end handling
     - The Checkout task
 */
-
-WashingTask::WashingTask(int washingTime, int redLedPin, int greenLedPin /* , LCD* lcd */)
-    : state(START_WASHING), savedCountDown(0), savedTimeInState(0), countDown(0) {}
-
 void WashingTask::init(int period)
 {
     Task::init(period);
@@ -72,7 +68,7 @@ void WashingTask::tick()
 
     case END_WASHING:
         // TODO: Implement the car distance detector actually it is not implemented
-        if (elapsedTime() > N4 * 1000 && !this->getPreviousState() == WASHING_IN_PROGRESS)
+        if (elapsedTime() > N4 * 1000 && !(this->getPreviousState() == WASHING_IN_PROGRESS))
         {
             Serial.println("WashingTask::Washing completed");
             L2->switchOff();

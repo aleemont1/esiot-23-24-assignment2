@@ -10,10 +10,11 @@
 class TaskWithState : public Task
 {
 public:
-    TaskWithState() : Task(){}; // Default constructor
+    TaskWithState() : Task(), previousState(0){}; // Default constructor
 
     void setState(const int state)
     {
+        this->previousState = this->state;
         this->state = state;
         this->stateTimestamp = millis();
     }
@@ -23,12 +24,18 @@ public:
         return this->state;
     }
 
+    int getPreviousState()
+    {
+        return this->previousState;
+    }
+
     long elapsedTime()
     {
         return millis() - stateTimestamp;
     }
 
 private:
+    int previousState;
     int state;
     long stateTimestamp;
 };

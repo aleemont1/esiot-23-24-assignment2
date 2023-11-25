@@ -40,29 +40,22 @@ public:
         completed = false;
     }
 
-    /**
-     * @brief
-     *
-     */
     virtual void tick() = 0;
 
     /**
      * @brief Updates the elapsed time and checks if it's time to execute the task.
-     * @param basePeriod The base period to add to the elapsed time.
+     * @param schedulerPeriod The base period to add to the elapsed time.
      * @return True if it's time to execute the task, false otherwise.
      */
-    bool updateAndCheckTime(int basePeriod)
+    virtual bool updateAndCheckTime(unsigned long schedulerPeriod)
     {
-        timeElapsed += basePeriod;
+        timeElapsed += schedulerPeriod;
         if (timeElapsed >= myPeriod)
         {
             timeElapsed = 0;
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /**

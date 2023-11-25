@@ -9,10 +9,10 @@ Scheduler scheduler;
 void setup()
 {
     Serial.begin(9600);
-    scheduler.init(500);
+    scheduler.init(100);
     //NOTE: THIS IS JUST A TEST TASK
     BlinkTask *blinkTask = new BlinkTask(L3_PIN);
-    blinkTask->init(500);
+    blinkTask->init(1000);
     blinkTask->setActive(true);
     //NOTE: THIS IS THE REAL TASK
     CheckInTask *checkInTask = new CheckInTask();

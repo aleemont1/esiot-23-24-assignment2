@@ -15,11 +15,17 @@ public:
         this->L2 = new Led(L2_PIN);
         this->gate = new Servo();
         gate->attach(SERVO_PIN);
-        this->setState(0);
+        Serial.println("CheckInTask created");
+        this->setState(STARTED);
     };
     void tick() override;
 
 private:
+    enum states
+    {
+        STARTED,
+        WAITING
+    };
     Led *L1;
     Led *L2;
     Servo *gate;

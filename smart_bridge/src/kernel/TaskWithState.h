@@ -4,6 +4,9 @@
 #include "Task.h"
 #include <Arduino.h>
 
+// TODO: Check if state managing is necessary
+// TODO: Create a stateless timed task class
+
 class TaskWithState : public Task
 {
 public:
@@ -15,7 +18,12 @@ public:
         this->stateTimestamp = millis();
     }
 
-    long timeInState()
+    int getState()
+    {
+        return this->state;
+    }
+
+    long elapsedTime()
     {
         return millis() - stateTimestamp;
     }

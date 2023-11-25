@@ -3,17 +3,18 @@
 
 #include "Task.h"
 
-#define MAX_TASKS 30
 class Scheduler {
-    //A simple cooperative scheduler to execute tasks
-    Task *tasks[MAX_TASKS];
-    int numTasks;
-    int period;
+private:
+  Task *tasks[10]; // Adjust the size based on the number of tasks
+  int numTasks;
+  unsigned long lastMillis;
+  int intervalMillis;
 
-    public:
-        void init(int period);
-        virtual bool addTask(Task *task);
-        virtual void schedule();
+public:
+  Scheduler();
+  void init(int intervalMillis);
+  void addTask(Task *task);
+  void schedule();
 };
 
 #endif

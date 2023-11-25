@@ -23,7 +23,7 @@ public:
         return this->state;
     }
 
-    long timeInState()
+    long elapsedTime()
     {
         return millis() - stateTimestamp;
     }

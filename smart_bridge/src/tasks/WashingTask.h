@@ -3,6 +3,7 @@
 
 #include "kernel/TaskWithState.h"
 #include "components/api/Led.h"
+#include "config/config.h"
 // TODO: #include "components/api/Lcd.h" actually missing the LCD component
 #include "config/config.h"
 

@@ -29,7 +29,8 @@
 /**
  * TODO: TIMING, time constants for example N4.... etc
  */
-#define N1 10      // Time for the gate to open after car presence (in seconds)
+#define N1 2
+      // Time for the gate to open after car presence (in seconds)
 #define MINDIST 10 // Minimum distance for car fully entering (in cm)
 #define N2 10      // Time to consider car fully entered (in seconds)
 #define N3 15      // Time for the washing process (in seconds)

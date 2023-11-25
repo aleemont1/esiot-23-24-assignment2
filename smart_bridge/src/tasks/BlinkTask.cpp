@@ -9,20 +9,20 @@ void BlinkTask::init(int period)
 {
     Task::init(period);
     led = new Led(pin);
-    state = OFF;
+    this->setState(OFF);
 }
 
 void BlinkTask::tick()
 {
-    switch (state)
+    switch (this->getState())
     {
     case OFF:
         led->switchOn();
-        state = ON;
+        this->setState(ON);
         break;
     case ON:
         led->switchOff();
-        state = OFF;
+        this->setState(OFF);
         break;
     }
 }

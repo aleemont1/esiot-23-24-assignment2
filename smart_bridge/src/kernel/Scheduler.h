@@ -3,16 +3,19 @@
 
 #include "Task.h"
 
-class Scheduler {
+#define MAX_TASKS 50
+
+class Scheduler
+{
 private:
-  Task *tasks[10]; // Adjust the size based on the number of tasks
-  int numTasks;
-  unsigned long lastMillis;
-  int intervalMillis;
+  unsigned int numTasks;
+  Task *tasks[MAX_TASKS]; // Adjust the size based on the number of tasks
+  unsigned long lastRunTime;
+  unsigned int schedulerPeriod;
 
 public:
   Scheduler();
-  void init(int intervalMillis);
+  void init(int schedulerPeriod);
   void addTask(Task *task);
   void schedule();
 };

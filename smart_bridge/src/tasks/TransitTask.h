@@ -36,4 +36,5 @@ private:
     Sonar *sonar;
     float distance;
 };
+
 #endif

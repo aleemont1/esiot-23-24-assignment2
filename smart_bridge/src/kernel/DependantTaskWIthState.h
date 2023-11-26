@@ -5,7 +5,7 @@
 #include "DependantTask.h"
 #include "TaskWithState.h"
 
-class DependantTaskWithState : public TaskWithState, public DependantTask
+class DependantTaskWithState : virtualpublic TaskWithState, virtual public DependantTask
 {
 public:
     DependantTaskWithState() : TaskWithState(), DependantTask(){};

@@ -3,7 +3,7 @@
 
 #define SONAR_MAX_TIME 10
 
-#include "kernel/TaskWithState.h"
+#include "kernel/DependantTaskWIthState.h"
 #include "config/config.h"
 #include "components/api/Sonar.h"
 #include "components/api/Led.h"
@@ -13,13 +13,15 @@
  *        If the distance is less than a threshold, the task is completed.
  */
 
-class TransitTask : public TaskWithState
+class TransitTask : public DependantTaskWithState
 {
 public:
-    TransitTask() : TaskWithState()
+    TransitTask() : DependantTaskWithState()
     {
         this->L2 = new Led(L2_PIN);
         this->sonar = new Sonar(SONAR_TRIG_PIN, SONAR_ECHO_PIN, SONAR_MAX_TIME);
+        this->init();
+        this->setState(READING_DISTANCE);
         Serial.println("TransitTask created");
     };
     void tick() override;

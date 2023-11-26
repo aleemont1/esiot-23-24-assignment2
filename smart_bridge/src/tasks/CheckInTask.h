@@ -15,8 +15,9 @@ public:
         this->L2 = new Led(L2_PIN);
         this->gate = new Servo();
         gate->attach(SERVO_PIN);
-        Serial.println("CheckInTask created");
+        this->init();
         this->setState(STARTED);
+        Serial.println("CheckInTask created");
     };
     void tick() override;
 

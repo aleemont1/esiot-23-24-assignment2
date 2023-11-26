@@ -3,21 +3,10 @@
 
 #include "Task.h"
 
-class DependantTask : public Task
+class DependantTask : virtual public Task
 {
 public:
     DependantTask() : Task(){};
-    void init() override
-    {
-        Task::init();
-        this->setDependant(true);
-    }
-
-    void init(int period) override
-    {
-        Task::init(period);
-        this->setDependant(true);
-    }
 
     void setDependency(Task *dependency)
     {

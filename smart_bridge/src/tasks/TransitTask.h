@@ -7,6 +7,8 @@
 #include "config/config.h"
 #include "components/api/Sonar.h"
 #include "components/api/Led.h"
+
+#include <Servo.h>
 /**
  * @class TransitTask
  * @brief This task reads the distance of the car while entering the washing area.
@@ -20,6 +22,9 @@ public:
     {
         this->L2 = new Led(L2_PIN);
         this->sonar = new Sonar(SONAR_TRIG_PIN, SONAR_ECHO_PIN, SONAR_MAX_TIME);
+        this->gate = new Servo();
+        this->gate->detach();
+        this->gate->attach(SERVO_PIN);
         this->init();
         this->setState(READING_DISTANCE);
         Serial.println("TransitTask created");
@@ -34,6 +39,7 @@ private:
     };
     Led *L2;
     Sonar *sonar;
+    Servo *gate;
     float distance;
 };
 

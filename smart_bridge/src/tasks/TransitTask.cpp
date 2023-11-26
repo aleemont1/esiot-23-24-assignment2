@@ -29,7 +29,8 @@ void TransitTask::tick()
                 {
                     Serial.println("TransitTask::Distance: " + String(this->distance));
                     this->L2->switchOff();
-                    this->DependantTask::setCompleted();
+                    gate->write(0);
+                    this->setCompleted();
                 }
             }
             else

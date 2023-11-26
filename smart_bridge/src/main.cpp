@@ -3,6 +3,7 @@
 #include "tasks/BlinkTask.h"
 #include "tasks/CheckInTask.h"
 #include "config/config.h"
+#include "tasks/TransitTask.h"
 
 Scheduler scheduler;
 
@@ -10,16 +11,18 @@ void setup()
 {
     Serial.begin(9600);
     scheduler.init(100);
-    //NOTE: THIS IS JUST A TEST TASK
+    /**NOTE: THIS IS JUST A TEST TASK
     BlinkTask *blinkTask = new BlinkTask(L3_PIN);
     blinkTask->init(1000);
     blinkTask->setActive(true);
-    //NOTE: THIS IS THE REAL TASK
+    */
+    // NOTE: THIS IS THE REAL TASK
     CheckInTask *checkInTask = new CheckInTask();
-    checkInTask->init();
-    checkInTask->setActive(true);
+    TransitTask *transitTask = new TransitTask();
+    transitTask->setDependency(checkInTask);
     scheduler.addTask(checkInTask);
-    scheduler.addTask(blinkTask);
+    scheduler.addTask(static_cast<DependantTask *>(transitTask));
+    // scheduler.addTask(blinkTask);
 }
 
 void loop()

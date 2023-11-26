@@ -1,16 +1,13 @@
 #ifndef __TASK_WITH_STATE__
 #define __TASK_WITH_STATE__
 
-#include "Task.h"
+#include "TaskWithTimer.h"
 #include <Arduino.h>
 
-// TODO: Check if state managing is necessary
-// TODO: Create a stateless timed task class
-
-class TaskWithState : public Task
+class TaskWithState : public TaskWithTimer
 {
 public:
-    TaskWithState() : Task(), previousState(0){}; // Default constructor
+    TaskWithState() : TaskWithTimer(), previousState(0){}; // Default constructor
 
     void setState(const int state)
     {
@@ -27,11 +24,6 @@ public:
     int getPreviousState()
     {
         return this->previousState;
-    }
-
-    long elapsedTime()
-    {
-        return millis() - stateTimestamp;
     }
 
 private:

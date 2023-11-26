@@ -4,12 +4,12 @@
 #include "Task.h"
 #include <Arduino.h>
 
-class TaskWithTimer : public Task
+class TaskWithTimer : virtual public Task
 {
 public:
     TaskWithTimer() : Task(){
         this->timerTimestamp = millis();
-    }; // Default constructor
+    };
 
     long elapsedTime()
     {

@@ -4,17 +4,32 @@
 #include "kernel/TaskWithState.h"
 #include "components/api/Led.h"
 
-class BlinkTask: public TaskWithState {
-
+class BlinkTask : public TaskWithState
+{
+private:
   int pin;
-  Light* led;
-  enum {ON, OFF} state;
+  Light *led;
+  enum
+  {
+    ON,
+    OFF
+  } state;
 
 public:
+  BlinkTask(int pin) : TaskWithState()
+  {
+    Serial.println("BlinkTask created");
+    this->pin = pin;
+  }
 
-  BlinkTask(int pin);  
-  void init(int period);  
-  void tick();
+  void init(int period)
+  {
+    Task::init(period);
+    this->led = new Led(pin);
+    this->setState(OFF);
+  }
+
+  void tick() override;
 };
 
 #endif

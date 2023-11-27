@@ -9,24 +9,28 @@
 
 void CheckInTask::tick()
 {
-    Serial.println("CheckInTask::started");
-    switch(this->getState()) {
-    
-        case STARTED:
-            L1->switchOn();                      // Turn on L1
-            Serial.println("CheckInTask::Turned on L1");
-            this->setState(WAITING);              // Set the state to STATE1
-            break;
-        case WAITING:
-            if (this->elapsedTime() >= (N1 * 1000)) // After N1 seconds have elapsed
-            {
-                L1->switchOff();      // Turn off L1
-                Serial.println("CheckInTask::Turned off L1");
-                L2->switchOn();       // Turn on L2
-                Serial.println("CheckInTask::Turned on L2");
-                gate->write(90);      // Open the gate
-                Serial.println("CheckInTask::Opened the gate");
-                this->setCompleted(); // Mark the task as completed
-            }
+    switch (this->getState())
+    {
+
+    case STARTED:
+        L1->switchOn(); // Turn on L1
+#ifdef __LOG
+        Serial.println("CheckInTask::Turned on L1");
+#endif
+        this->setState(WAITING); // Set the state to STATE1
+        break;
+    case WAITING:
+        if (this->elapsedTime() >= (N1 * 1000)) // After N1 seconds have elapsed
+        {
+            L1->switchOff(); // Turn off L1
+#ifdef __LOG
+            Serial.println("CheckInTask::Turned off L1");
+#endif
+            gate->write(90); // Open the gate
+#ifdef __LOG
+            Serial.println("CheckInTask::Opened the gate");
+#endif
+            this->setCompleted(); // Mark the task as completed
+        }
     }
 }

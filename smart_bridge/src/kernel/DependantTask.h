@@ -12,7 +12,7 @@ public:
 
     void addDependency(Task *dependency)
     {
-        if (nDependencies < sizeof(dependencies) / sizeof(dependencies[0]))
+        if (nDependencies < sizeof(dependencies) / sizeof(dependencies[0]) && nDependencies <= MAX_DEPENDENCIES)
         {
             this->dependencies[nDependencies++] = dependency;
         }

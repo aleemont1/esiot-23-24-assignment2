@@ -4,6 +4,7 @@
 #define SONAR_MAX_TIME 10
 
 #include "kernel/DependantTaskWIthState.h"
+#include "BlinkTask.h"
 #include "config/config.h"
 #include "components/api/Sonar.h"
 #include "components/api/Led.h"
@@ -18,16 +19,19 @@
 class TransitTask : public DependantTaskWithState
 {
 public:
-    TransitTask() : DependantTaskWithState()
+    TransitTask(BlinkTask *blinkTask) : DependantTaskWithState()
     {
+        Serial.println("TransitTask created");
         this->L2 = new Led(L2_PIN);
         this->sonar = new Sonar(SONAR_TRIG_PIN, SONAR_ECHO_PIN, SONAR_MAX_TIME);
         this->gate = new Servo();
         this->gate->detach();
         this->gate->attach(SERVO_PIN);
+        this->blinkTask = blinkTask;
+        this->blinkTask->init(100);
+        this->blinkTask->setActive(false);
         this->init();
         this->setState(READING_DISTANCE);
-        Serial.println("TransitTask created");
     };
     void tick() override;
 
@@ -41,6 +45,7 @@ private:
     Sonar *sonar;
     Servo *gate;
     float distance;
+    Task *blinkTask;
 };
 
 #endif

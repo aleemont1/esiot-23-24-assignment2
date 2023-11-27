@@ -21,6 +21,10 @@ bool Pir::checkNotDetectedStatus()
     return pirDetectionStatus == OBJECT_NOT_DETECTED;
 }
 
+void Pir::calibrate() {
+
+}
+
 void Pir::updatePirState()
 {
     // If the PIR sensor detects movement, the pin will be HIGH.

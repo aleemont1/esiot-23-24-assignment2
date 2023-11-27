@@ -14,13 +14,12 @@ void setup()
     BlinkTask *blinkTaskTransit = new BlinkTask(L2_PIN);
     CheckInTask *checkInTask = new CheckInTask();
     TransitTask *transitTask = new TransitTask(blinkTaskTransit);
-    BlinkTask *blink = new BlinkTask(L3_PIN);
+
     transitTask->addDependency(checkInTask);
 
     scheduler.addTask(checkInTask);
     scheduler.addTask(transitTask);
     scheduler.addTask(blinkTaskTransit);
-
 }
 
 void loop()

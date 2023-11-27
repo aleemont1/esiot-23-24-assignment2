@@ -1,8 +1,12 @@
 #ifndef __CONFIG__
 #define __CONFIG__
 
-//DEBUG
-//#define __DEBUG
+/**DEBUG options
+ * WARNING: It gets a bit messy if both are enabled
+ */
+
+// #define __LOG         //for explicit messages from tasks.
+// #define __DEBUG       //for "cryptic" messages from the scheduler and few other things.
 
 // LED
 #define L1_PIN 7 // Green diode led
@@ -30,7 +34,7 @@
  * TODO: TIMING, time constants for example N4.... etc
  */
 #define N1 2
-      // Time for the gate to open after car presence (in seconds)
+// Time for the gate to open after car presence (in seconds)
 #define MINDIST 10 // Minimum distance for car fully entering (in cm)
 #define N2 10      // Time to consider car fully entered (in seconds)
 #define N3 15      // Time for the washing process (in seconds)

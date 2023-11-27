@@ -2,34 +2,37 @@
 
 void TransitTask::tick()
 {
-
-    if (this->DependantTask::getDependency()->isCompleted())
+    if (this->getDependency(0)->isCompleted())
     {
         switch (this->getState())
         {
         case READING_DISTANCE:
+#ifdef __LOG
             Serial.println("TransitTask::Reading distance");
-            this->L2->switchOn();
+#endif
+            this->blinkTask->setActive(true);
             this->distance = sonar->detectDistance();
-            Serial.println("TransitTask::Distance: " + String(this->distance));
+            // Serial.println("TransitTask::Distance: " + String(this->distance));
             if (this->distance < MINDIST)
             {
                 this->setState(CHECKING_DISTANCE);
+#ifdef __LOG
+                Serial.println("TransitTask::Checking distance");
+#endif
                 this->resetTime();
             }
             break;
 
         case CHECKING_DISTANCE:
-            Serial.println("TransitTask::Checking distance");
             this->distance = sonar->detectDistance();
-            Serial.println("TransitTask::Distance: " + String(this->distance));
+            // Serial.println("TransitTask::Distance: " + String(this->distance));
             if (this->distance < MINDIST)
             {
                 if (this->elapsedTime() >= (N2 * 1000))
                 {
-                    Serial.println("TransitTask::Distance: " + String(this->distance));
-                    this->L2->switchOff();
+                    // Serial.println("TransitTask::Distance: " + String(this->distance));
                     gate->write(0);
+                    this->blinkTask->setActive(false);
                     this->setCompleted();
                 }
             }

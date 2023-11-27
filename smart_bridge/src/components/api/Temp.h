@@ -18,10 +18,17 @@ public:
      */
     Temp(int pin);
 
+    /**
+     * @brief Get the Temp object
+     *
+     * @return int The temperature value read from the sensor.
+     */
+    int getTemp();
+
 private:
     /**
      * @brief The pin number where the temperature sensor is connected.
-     * 
+     *
      */
     int tempPin;
 };

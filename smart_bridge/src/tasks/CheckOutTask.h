@@ -1,7 +1,7 @@
 #ifndef __CHECK_OUT_TASK__
 #define __CHECK_OUT_TASK__
 
-#define SONAR_MAX_TIME 10
+#define SONAR_MAX_TIME 10000
 
 #include "kernel/DependantTaskWIthState.h"
 #include "BlinkTask.h"

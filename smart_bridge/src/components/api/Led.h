@@ -4,23 +4,23 @@
 #include "Light.h"
 #include "Arduino.h"
 
-/**
- * @brief The interval at which the led blinks
- *
- */
-const unsigned long BLINK_INTERVAL = 250;
+// /**
+//  * @brief The interval at which the led blinks
+//  *
+//  */
+// const unsigned long BLINK_INTERVAL = 250;
 
-/**
- * @brief When the led last blinked
- *
- */
-unsigned long lastBlinkTime = 0;
+// /**
+//  * @brief When the led last blinked
+//  *
+//  */
+// unsigned long lastBlinkTime = 0;
 
-/**
- * @brief The current state of the led
- *
- */
-int blinkState = LOW;
+// /**
+//  * @brief The current state of the led
+//  *
+//  */
+// int blinkState = LOW;
 
 class Led : public Light
 {

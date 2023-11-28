@@ -17,15 +17,15 @@ void Led::switchOff()
   digitalWrite(pin, LOW);
 };
 
-void Led::blink()
-{
-  // Grab the current time
-  unsigned long currentMillis = millis();
+// void Led::blink()
+// {
+//   // Grab the current time
+//   unsigned long currentMillis = millis();
 
-  if (currentMillis - lastBlinkTime >= BLINK_INTERVAL)
-  {
-    lastBlinkTime = currentMillis;
-    blinkState = (blinkState == LOW) ? HIGH : LOW;
-    digitalWrite(pin, blinkState);
-  }
-}
+//   if (currentMillis - lastBlinkTime >= BLINK_INTERVAL)
+//   {
+//     lastBlinkTime = currentMillis;
+//     blinkState = (blinkState == LOW) ? HIGH : LOW;
+//     digitalWrite(pin, blinkState);
+//   }
+// }

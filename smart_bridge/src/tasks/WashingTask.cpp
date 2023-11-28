@@ -23,6 +23,7 @@ void WashingTask::tick()
 {
     if (this->DependantTask::getDependency(0)->isCompleted())
     {
+
         switch (this->getState())
         {
         case START_WASHING:
@@ -31,6 +32,7 @@ void WashingTask::tick()
                 this->setState(ERROR_RECOVERY);
             }
             resetTime(); // Reset the time spent in the current state
+            this->countDownTask->setActive(true);
             Serial.println("WashingTask:: Button has been pressed");
             delay(500);
             Serial.println("WashingTask:: The washing process is started");
@@ -39,10 +41,10 @@ void WashingTask::tick()
             Serial.println("WashingTask::L2 blinking started");
             delay(500);
             countDown = N3;
-            this->setState(COUNTDOWN);
+            // this->setState(COUNTDOWN);
             break;
 
-        case COUNTDOWN:
+/*         case COUNTDOWN:
             Serial.println("WashingTask::Countdown started");
             delay(500);
             if (millis() - lastDecrementTime >= 1000) // If at least one second has passed
@@ -53,14 +55,14 @@ void WashingTask::tick()
                 countDown--;                  // Decrement the countdown
                 lastDecrementTime = millis(); // Update the last decrement time
                 // TODO: it is actually a placeholder for the real function, make sure to update it with the appropriate one used with the UI
-                this->updateCountdownDisplay(countDown);
+                this->updateCountdownUI(countDown);
                 // To ensure that the countdown doesn't go below zero and the washing process is interrupted
                 if (countDown <= 0)
                 {
                     this->setCompleted();
                     break;
                 }
-            }
+            } */
             // TODO: lcd->print(countDown);
             Serial.println("WashingTask::Countdown printed on LCD");
             delay(500);
@@ -83,20 +85,17 @@ void WashingTask::tick()
                 savedCountDown = ((countDown * 1000) - elapsedTime()); // Save the countdown before the error
                 this->setState(ERROR);
             }
-            if (this->elapsedTime() >= (countDown * 1000))
+            if (this->countDownTask->isCompleted())
             {
-                Serial.println("WashingTask::Countdown finished");
-                delay(500);
                 this->setCompleted();
             }
             break;
 
         case ERROR_RECOVERY:
             Serial.println("WashingTask::Error recovery started");
-            delay(500);
+            this->countDownTask->setActive(false);
             countDown = savedCountDown; // Restore the countdown from the saved value
             Serial.println("WashingTask::The countdown is restored");
-            delay(500);
             this->setState(COUNTDOWN); // Change the state back to COUNTDOWN
             break;
 

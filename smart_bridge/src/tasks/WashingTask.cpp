@@ -35,10 +35,10 @@ void WashingTask::tick()
                 Serial.println("WashingTask::Previous state is ERROR");
                 delay(500);
                 countDown = savedCountDown; // Restore the countdown
-                Serial.println("WashingTask::Countdown restored" + countDown);
+                Serial.println("WashingTask::Countdown restored" + String(countDown));
                 delay(500);
                 savedTimeInState = millis() - this->elapsedTime(); // Save the time spent in the current state
-                Serial.println("WashingTask::Time in state saved" + savedTimeInState);
+                Serial.println("WashingTask::Time in state saved" + String(savedTimeInState));
                 delay(500);
             }
             resetTime(); // Reset the time spent in the current state
@@ -46,7 +46,7 @@ void WashingTask::tick()
             delay(500);
             Serial.println("WashingTask:: The washing process is started");
             delay(500);
-            L2->blink();
+            this->blinkTask->setActive(true);
             Serial.println("WashingTask::L2 blinking started");
             delay(500);
             countDown = N3;
@@ -92,7 +92,7 @@ void WashingTask::tick()
             Serial.println("WashingTask::The washing process is suspended");
             delay(500);
             Serial.println("Simulates the time to receive and press the buttons on the UI");
-            Serial.println(5000);
+            delay(5000);
             Serial.println("WashingTask::OK message received");
             delay(500);
             this->setState(START_WASHING);

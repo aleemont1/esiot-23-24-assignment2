@@ -3,28 +3,38 @@
 
 #include "Task.h"
 
+#define MAX_DEPENDENCIES 2
+
 class DependantTask : virtual public Task
 {
 public:
     DependantTask() : Task(){};
 
-    void setDependency(Task *dependency)
+    void addDependency(Task *dependency)
     {
-        this->dependency = dependency;
+        if (nDependencies < sizeof(dependencies) / sizeof(dependencies[0]) && nDependencies <= MAX_DEPENDENCIES)
+        {
+            this->dependencies[nDependencies++] = dependency;
+        }
     }
 
-    Task *getDependency()
+    Task **getDependencies()
     {
-        return this->dependency;
+        return this->dependencies;
     }
 
-    bool canRun()
+    Task *getDependency(unsigned short index)
     {
-        return this->dependency->isCompleted();
+        if (index < sizeof(dependencies) / sizeof(dependencies[0]))
+        {
+            return this->dependencies[index];
+        }
+        return nullptr;
     }
 
 private:
-    Task *dependency;
+    Task **dependencies;
+    unsigned short nDependencies;
 };
 
 #endif

@@ -1,8 +1,12 @@
 #ifndef __CONFIG__
 #define __CONFIG__
 
-// DEBUG
-// #define __DEBUG
+/**DEBUG options
+ * WARNING: It gets a bit messy if both are enabled
+ */
+
+// #define __LOG         //for explicit messages from tasks.
+// #define __DEBUG       //for "cryptic" messages from the scheduler and few other things.
 
 // LED
 #define L1_PIN 7 // Green diode led

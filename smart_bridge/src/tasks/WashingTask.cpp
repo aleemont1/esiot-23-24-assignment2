@@ -19,10 +19,6 @@ Washing:
     - Passa a Critical-Temp.
 */
 
-// TODO: WashingTask *washingTask = new WashingTask();
-// TODO: washingTask->setDependency();
-// TODO: scheduler->addTask(washingTask);
-
 void WashingTask::tick()
 {
     if (this->DependantTask::getDependency(0)->isCompleted())
@@ -32,14 +28,7 @@ void WashingTask::tick()
         case START_WASHING:
             if (this->getPreviousState() == ERROR)
             {
-                Serial.println("WashingTask::Previous state is ERROR");
-                delay(500);
-                countDown = savedCountDown; // Restore the countdown
-                Serial.println("WashingTask::Countdown restored" + String(countDown));
-                delay(500);
-                savedTimeInState = millis() - this->elapsedTime(); // Save the time spent in the current state
-                Serial.println("WashingTask::Time in state saved" + String(savedTimeInState));
-                delay(500);
+                this->setState(ERROR_RECOVERY);
             }
             resetTime(); // Reset the time spent in the current state
             Serial.println("WashingTask:: Button has been pressed");
@@ -56,6 +45,22 @@ void WashingTask::tick()
         case COUNTDOWN:
             Serial.println("WashingTask::Countdown started");
             delay(500);
+            if (millis() - lastDecrementTime >= 1000) // If at least one second has passed
+            {
+                Serial.println("WashingTask::One second has passed");
+                delay(500);
+                Serial.println("WashingTask::Countdown decremented");
+                countDown--;                  // Decrement the countdown
+                lastDecrementTime = millis(); // Update the last decrement time
+                // TODO: it is actually a placeholder for the real function, make sure to update it with the appropriate one used with the UI
+                this->updateCountdownDisplay(countDown);
+                // To ensure that the countdown doesn't go below zero and the washing process is interrupted
+                if (countDown <= 0)
+                {
+                    this->setCompleted();
+                    break;
+                }
+            }
             // TODO: lcd->print(countDown);
             Serial.println("WashingTask::Countdown printed on LCD");
             delay(500);
@@ -63,7 +68,7 @@ void WashingTask::tick()
             // by means of the TEMP sensor, reporting  the ongoing value on the PC Console Dashboard.
             Serial.println("WashingTask::Temperature monitored");
             delay(500);
-            Serial.println("WashingTask::Temperature printed on PC Console Dashboard" + tempSensor->getTemp());
+            Serial.println("WashingTask::Temperature printed on PC Console Dashboard" + String(tempSensor->getTemp()));
             delay(500);
 
             if ((tempSensor->getTemp() > MAXTEMP) && (this->elapsedTime() > (N4_FOR_TEMP * 1000)))
@@ -75,7 +80,7 @@ void WashingTask::tick()
                 // TODO: lcd->print("Detected a Problem - Please Wait");
                 Serial.println("WashingTask::Detected a Problem - Please Wait");
                 delay(500);
-                savedCountDown = countDown; // Save the countdown before the error
+                savedCountDown = ((countDown * 1000) - elapsedTime()); // Save the countdown before the error
                 this->setState(ERROR);
             }
             if (this->elapsedTime() >= (countDown * 1000))
@@ -84,6 +89,15 @@ void WashingTask::tick()
                 delay(500);
                 this->setCompleted();
             }
+            break;
+
+        case ERROR_RECOVERY:
+            Serial.println("WashingTask::Error recovery started");
+            delay(500);
+            countDown = savedCountDown; // Restore the countdown from the saved value
+            Serial.println("WashingTask::The countdown is restored");
+            delay(500);
+            this->setState(COUNTDOWN); // Change the state back to COUNTDOWN
             break;
 
         case ERROR:

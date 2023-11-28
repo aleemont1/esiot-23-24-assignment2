@@ -11,6 +11,12 @@
 #include "config/config.h"
 
 /**
+ * @brief This variable will hold the last time the countdown was decremented
+ *
+ */
+unsigned long lastDecrementTime = 0;
+
+/**
  * @class CarWashingTask
  * @brief Represents the car washing task.
  */
@@ -23,7 +29,7 @@ public:
         this->L2 = new Led(L2_PIN);
         this->L3 = new Led(L3_PIN);
         this->tempSensor = new Temp(TMP_PIN);
-        // TODO: this->lcd = new LCD(1, 16, 2);
+        this->lcd = new LCD(0x27, 16, 2);
         this->blinkTask = blinkTask;
         this->blinkTask->init(500);
         this->blinkTask->setActive(false);
@@ -32,12 +38,22 @@ public:
     };
     void tick() override;
 
+    /**
+     * @brief This function updates the countdown displayed on the UI (actually doing it on LCD display)
+     *
+     * @param count The countdown to be displayed on the UI (actually on LCD display)
+     */
+    void updateCountdownDisplay(int count)
+    {
+        lcd->write(("Countdown: " + String(countDown)).c_str(), 0, 0);
+    }
+
 private:
     enum state
     {
         START_WASHING,
         COUNTDOWN,
-        CRITICAL_TEMP,
+        ERROR_RECOVERY,
         ERROR
     };
 

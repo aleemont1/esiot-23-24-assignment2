@@ -9,12 +9,7 @@
 #include <components/api/Temp.h>
 #include "components/api/LCD.h"
 #include "config/config.h"
-
-/**
- * @brief This variable will hold the last time the countdown was decremented
- *
- */
-unsigned long lastDecrementTime = 0;
+#include "tasks/CountDown.h"
 
 /**
  * @class CarWashingTask
@@ -23,7 +18,7 @@ unsigned long lastDecrementTime = 0;
 class WashingTask : public DependantTaskWithState
 {
 public:
-    WashingTask(BlinkTask *blinkTask) : DependantTaskWithState()
+    WashingTask(BlinkTask *blinkTask, CountDown *countDownTask) : DependantTaskWithState()
     {
         Serial.println("WashingTask created");
         this->L2 = new Led(L2_PIN);
@@ -33,6 +28,8 @@ public:
         this->blinkTask = blinkTask;
         this->blinkTask->init(500);
         this->blinkTask->setActive(false);
+        this->countDownTask = countDownTask;
+        this->countDownTask->init(1000);
         this->init();
         this->setState(START_WASHING);
     };
@@ -43,7 +40,7 @@ public:
      *
      * @param count The countdown to be displayed on the UI (actually on LCD display)
      */
-    void updateCountdownDisplay(int count)
+    void updateCountdownUI(int count)
     {
         lcd->write(("Countdown: " + String(countDown)).c_str(), 0, 0);
     }
@@ -65,6 +62,7 @@ private:
     Temp *tempSensor; // Temperature sensor
     LCD *lcd;         // The LCD display
     Task *blinkTask;  // The blink task for the leds
+    CountDown *countDownTask;
 };
 
 #endif // __WASHING_TASK__

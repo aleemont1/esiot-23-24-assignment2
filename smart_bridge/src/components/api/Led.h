@@ -2,6 +2,7 @@
 #define __LED__
 
 #include "Light.h"
+#include "Arduino.h"
 
 /**
  * @brief The interval at which the led blinks

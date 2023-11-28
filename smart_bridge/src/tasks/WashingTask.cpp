@@ -25,7 +25,7 @@ Washing:
 
 void WashingTask::tick()
 {
-    if (this->DependantTask::getDependency()->isCompleted())
+    if (this->DependantTask::getDependency(0)->isCompleted())
     {
         switch (this->getState())
         {

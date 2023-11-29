@@ -19,9 +19,9 @@ void CheckOutTask::tick()
 {
     if (this->getDependency(0)->isCompleted())
     {
+        Serial.println("CheckOutTask::started");
         switch (this->getState())
         {
-            Serial.println("CheckOutTask::started");
         case OPENING_GATE:
             Serial.println("CheckOutTask::Opening the gate");
             gate->write(90);

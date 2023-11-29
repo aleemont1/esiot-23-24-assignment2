@@ -104,11 +104,6 @@ public:
         this->active = active;
     }
 
-    void resetTime()
-    {
-        timeElapsed = 0;
-    }
-
 private:
     int myPeriod;    // The period of the task.
     int timeElapsed; // The elapsed time since the last execution of the task.

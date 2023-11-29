@@ -7,7 +7,8 @@
 class TaskWithTimer : virtual public Task
 {
 public:
-    TaskWithTimer() : Task(){
+    TaskWithTimer() : Task()
+    {
         this->timerTimestamp = millis();
     };
 
@@ -15,6 +16,12 @@ public:
     {
         return millis() - timerTimestamp;
     }
+
+    void resetTime()
+    {
+        this->timerTimestamp = millis();
+    }
+
 private:
     long timerTimestamp;
 };

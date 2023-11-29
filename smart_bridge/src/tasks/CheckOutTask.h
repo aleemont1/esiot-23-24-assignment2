@@ -3,7 +3,7 @@
 
 #define SONAR_MAX_TIME 10000
 
-#include "kernel/DependantTaskWIthState.h"
+#include "kernel/DependantTaskWithState.h"
 #include "BlinkTask.h"
 #include "components/api/Led.h"
 #include "components/api/Sonar.h"

@@ -2,7 +2,7 @@
 #define __DEPENDANT_TASK__
 
 #include "Task.h"
-
+#include <Arduino.h>
 #define MAX_DEPENDENCIES 2
 
 /**
@@ -18,15 +18,19 @@
 class DependantTask : virtual public Task
 {
 public:
-    DependantTask() : Task(){};
+    DependantTask() : Task(){
+        this->dependencies = new Task *[MAX_DEPENDENCIES];
+        this->nDependencies = 0;
+    };
 
     /**
      * @brief Add a dependency.
      */
     void addDependency(Task *dependency)
     {
-        if (nDependencies < sizeof(dependencies) / sizeof(dependencies[0]) && nDependencies <= MAX_DEPENDENCIES)
+        if (nDependencies <= MAX_DEPENDENCIES)
         {
+            Serial.println("DependantTask::addDependency()");
             this->dependencies[nDependencies++] = dependency;
         }
     }
@@ -47,7 +51,7 @@ public:
      */
     Task *getDependency(unsigned short index)
     {
-        if (index < sizeof(dependencies) / sizeof(dependencies[0]))
+        if (index < nDependencies && index >= 0 && this->dependencies[index] != nullptr)
         {
             return this->dependencies[index];
         }

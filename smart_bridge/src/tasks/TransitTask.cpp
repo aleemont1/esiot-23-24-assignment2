@@ -12,25 +12,36 @@ void TransitTask::tick()
 #endif
             this->blinkTask->setActive(true);
             this->distance = sonar->detectDistance();
-            // Serial.println("TransitTask::Distance: " + String(this->distance));
+#ifdef __LOG
+            Serial.println("TransitTask::Distance: " + String(this->distance));
+#endif
             if (this->distance < MINDIST)
             {
+                this->resetTime();
                 this->setState(CHECKING_DISTANCE);
 #ifdef __LOG
                 Serial.println("TransitTask::Checking distance");
 #endif
-                this->resetTime();
             }
             break;
 
         case CHECKING_DISTANCE:
             this->distance = sonar->detectDistance();
-            // Serial.println("TransitTask::Distance: " + String(this->distance));
+#ifdef __LOG
+            Serial.println("TransitTask::Distance: " + String(this->distance));
+#endif
             if (this->distance < MINDIST)
             {
+#ifdef __DEBUG
+                Serial.println("TransitTask::Elapsed: " + String(this->elapsedTime()));
+#endif
                 if (this->elapsedTime() >= (N2 * 1000))
                 {
-                    // Serial.println("TransitTask::Distance: " + String(this->distance));
+#ifdef __LOG
+                    Serial.println("TransitTask::Distance: " + String(this->distance));
+                    Serial.println("TransitTask::Car entered");
+                    Serial.println("TransitTask::Closing gate");
+#endif
                     gate->write(0);
                     this->blinkTask->setActive(false);
                     this->setCompleted();

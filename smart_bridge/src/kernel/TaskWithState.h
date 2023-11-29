@@ -4,6 +4,11 @@
 #include "TaskWithTimer.h"
 #include <Arduino.h>
 
+/**
+ * @class TaskWithState
+ * @brief A task with a state.
+ * @note The state is an integer value that can be used to represent the state of the task.
+*/
 class TaskWithState : public TaskWithTimer
 {
 public:

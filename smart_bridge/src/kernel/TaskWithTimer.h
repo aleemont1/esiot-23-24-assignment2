@@ -4,6 +4,11 @@
 #include "Task.h"
 #include <Arduino.h>
 
+/**
+ * @class TaskWithTimer
+ * @brief A task with a timer.
+ * @note The timer is a long value that can be used to measure the time elapsed since the last reset. (First reset is done automatically at the initialization).
+*/
 class TaskWithTimer : virtual public Task
 {
 public:

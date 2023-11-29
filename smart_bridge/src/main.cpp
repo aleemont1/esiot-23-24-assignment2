@@ -17,7 +17,7 @@ void setup()
     scheduler.init(50); // NOTE: Might be set higher to use less power, needs testing.
 
     /**CREATE TASKS**/
-    BlinkTask *blinkTask = new BlinkTask(L2_PIN);
+    BlinkTask *blinkTask = new BlinkTask(L2_PIN, 100);
     // TODO: BlinkTask *blinkTaskForCheckOutTransit = new BlinkTask(L2_PIN);
     // SleepingTask *sleepingTask = new SleepingTask();
     //WaitingTask *waitingTask = new WaitingTask();

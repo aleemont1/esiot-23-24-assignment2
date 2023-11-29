@@ -26,6 +26,7 @@ public:
     {
         Serial.println("TransitTask created");
         this->sonar = new Sonar(SONAR_TRIG_PIN, SONAR_ECHO_PIN, SONAR_MAX_TIME);
+        this->L2 = new Led(L2_PIN);
         // TODO: FIX SERVO.
         this->gate = new Servo();
         this->gate->detach();
@@ -45,10 +46,11 @@ private:
         READING_DISTANCE,
         CHECKING_DISTANCE
     };
+    Led *L2;
     Sonar *sonar;
     Servo *gate;
     float distance;
-    Task *blinkTask;
+    BlinkTask *blinkTask;
 };
 
 #endif

@@ -1,9 +1,7 @@
 #ifndef __TRANSIT_TASK__
 #define __TRANSIT_TASK__
 
-#define SONAR_MAX_TIME 10
-
-#include "kernel/DependantTaskWIthState.h"
+#include "kernel/DependantTaskWithSWtate.h"
 #include "BlinkTask.h"
 #include "config/config.h"
 #include "components/api/Sonar.h"
@@ -15,6 +13,8 @@
  * @brief This task reads the distance of the car while entering the washing area.
  *        If the distance is less than a threshold, the task is completed.
  */
+
+#define SONAR_MAX_TIME 10000
 
 class TransitTask : public DependantTaskWithState
 {

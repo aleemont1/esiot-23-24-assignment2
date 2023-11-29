@@ -7,3 +7,9 @@ Temp::Temp(int pin)
     this->tempPin = TMP_PIN;
     pinMode(tempPin, INPUT);
 }
+
+int Temp::getTemp()
+{
+    int temp = analogRead(tempPin);
+    return temp;
+}

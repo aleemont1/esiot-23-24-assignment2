@@ -8,6 +8,7 @@
 #include "tasks/WashingTask.h"
 #include "tasks/CheckOutTask.h"
 #include "tasks/CountDown.h"
+#include "tasks/ServoTestTask.h"
 
 Scheduler scheduler;
 
@@ -17,31 +18,33 @@ void setup()
     scheduler.init(50); // NOTE: Might be set higher to use less power, needs testing.
 
     /**CREATE TASKS**/
-    BlinkTask *blinkTask = new BlinkTask(L2_PIN, 100);
+    // ServoTestTask *servoTask = new ServoTestTask();
+    BlinkTask *blinkTask = new BlinkTask(L2_PIN);
     // TODO: BlinkTask *blinkTaskForCheckOutTransit = new BlinkTask(L2_PIN);
     // SleepingTask *sleepingTask = new SleepingTask();
-    //WaitingTask *waitingTask = new WaitingTask();
+    // WaitingTask *waitingTask = new WaitingTask();
     CheckInTask *checkInTask = new CheckInTask();
     TransitTask *transitTask = new TransitTask(blinkTask);
-    //WashingTask *washingTask = new WashingTask(blinkTask, new CountDown(N3));
+    // WashingTask *washingTask = new WashingTask(blinkTask, new CountDown(N3));
     // TODO: CheckOutTask *checkOutTask = new CheckOutTask(blinkTaskForCheckOutTransit);
-    // CountDown *countDown = new CountDown(N3);        // NOTE: This is just a test.
-    // countDown->setActive(true);                      // NOTE: This is just a test.
+    CountDown *countDown = new CountDown(N3); // NOTE: This is just a test.
+    countDown->setActive(true);               // NOTE: This is just a test.
 
     /**DEPENDENCIES**/
-    //checkInTask->addDependency(waitingTask);
+    // checkInTask->addDependency(waitingTask);
     transitTask->addDependency(checkInTask);
     // washingTask->addDependency(transitTask);
     // checkOutTask->addDependency(washingTask);
 
     /**ADD TASKS TO THE SCHEDULER**/
+    // scheduler.addTask(servoTask);
     // scheduler.addTask(countDown); // NOTE: This is just a test.
-    //scheduler.addTask(waitingTask);
+    // scheduler.addTask(waitingTask);
     scheduler.addTask(checkInTask);
     scheduler.addTask(transitTask);
     scheduler.addTask(blinkTask);
 
-    //scheduler.addTask(washingTask);
+    // scheduler.addTask(washingTask);
 
     // TODO: scheduler.addTask(checkOutTask);
     // TODO: scheduler.addTask(blinkTaskForCheckOutTransit);

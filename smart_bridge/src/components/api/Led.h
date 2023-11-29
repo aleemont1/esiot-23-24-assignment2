@@ -28,11 +28,6 @@ public:
   Led(int pin);
   void switchOn();
   void switchOff();
-  /**
-   * @brief Makes the led blink with a period of 0.5 secs
-   *
-   */
-  void blink();
 
 protected:
   int pin;

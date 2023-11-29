@@ -9,6 +9,9 @@ public:
     CountDown(int countDown) : Task()
     {
         this->countDown = countDown;
+        this->init(1000);       // Periodic task, executed every 1000ms
+        this->setActive(false); /** NOTE: Might be removed, this stops the countdown by default.
+                                 setActive(true) to start the countdown in your task. **/
     }
 
     void tick() override;

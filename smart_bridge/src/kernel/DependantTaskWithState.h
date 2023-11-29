@@ -9,6 +9,7 @@ class DependantTaskWithState : virtual public TaskWithState, virtual public Depe
 {
 public:
     DependantTaskWithState() : TaskWithState(), DependantTask(){};
+    DependantTaskWithState(Task *dependency1, Task *dependency2) : TaskWithState(), DependantTask(dependency1, dependency2){};
 };
 
 #endif

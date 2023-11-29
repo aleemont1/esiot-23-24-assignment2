@@ -1,12 +1,10 @@
 #ifndef __WASHING_TASK__
 #define __WASHING_TASK__
 
-#define SONAR_MAX_TIME 10
-
-#include "kernel/DependantTaskWIthState.h"
+#include "kernel/DependantTaskWithState.h"
 #include "BlinkTask.h"
 #include "components/api/Led.h"
-#include <components/api/Temp.h>
+#include "components/api/Temp.h"
 #include "components/api/LCD.h"
 #include "config/config.h"
 #include "tasks/CountDown.h"

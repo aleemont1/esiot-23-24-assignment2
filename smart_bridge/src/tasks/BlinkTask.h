@@ -7,6 +7,8 @@
 /**
  * @class BlinkTask
  * @brief A task that blinks a LED.
+ * 
+ * @author Alessandro Monticelli
  */
 class BlinkTask : public TaskWithState
 {

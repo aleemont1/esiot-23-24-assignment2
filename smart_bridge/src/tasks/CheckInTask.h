@@ -9,6 +9,8 @@
 /**
  * @class CheckInTask
  * @brief This task opens the gate after the car has been detected.
+ * 
+ * @author Alessandro Monticelli
 */
 class CheckInTask : public DependantTaskWithState
 {

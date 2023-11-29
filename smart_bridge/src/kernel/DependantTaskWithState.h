@@ -5,8 +5,10 @@
 #include "TaskWithState.h"
 
 /**
- *  @class DependantTaskWithState
+ * @class DependantTaskWithState
  * @brief A task that depends on other tasks and has a state
+ * 
+ * @author Alessandro Monticelli
  */
 class DependantTaskWithState : virtual public TaskWithState, virtual public DependantTask
 {

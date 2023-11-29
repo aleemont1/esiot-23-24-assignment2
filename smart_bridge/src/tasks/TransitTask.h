@@ -12,6 +12,8 @@
  * @class TransitTask
  * @brief This task reads the distance of the car while entering the washing area.
  *        If the distance is less than a threshold, the task is completed.
+ * 
+ * @author Alessandro Monticelli
  */
 class TransitTask : public DependantTaskWithState
 {
@@ -34,7 +36,7 @@ public:
         this->init();
         this->setState(READING_DISTANCE);
     };
-    
+
     void tick() override;
 
 private:

@@ -1,12 +1,5 @@
 #include "CheckInTask.h"
 
-// Implement the CheckInTask class that executes the checkin process.
-// The checkin process is as follows:
-// 1. Turn on the L1 led.
-// 2. Wait for N1 seconds.
-// 3. Turn on the L2 led.
-// 4. Open the gate.
-
 void CheckInTask::tick()
 {
     switch (this->getState())

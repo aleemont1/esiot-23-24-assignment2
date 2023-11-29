@@ -7,7 +7,7 @@
 /**
  * @class BlinkTask
  * @brief A task that blinks a LED.
- * 
+ *
  * @author Alessandro Monticelli
  */
 class BlinkTask : public TaskWithState
@@ -33,6 +33,10 @@ public:
   {
     Serial.println("BlinkTask created");
     this->pin = pin;
+    if (this->isActive())
+    {
+      this->setActive(false);
+    }
   }
 
   /**
@@ -47,6 +51,12 @@ public:
   }
 
   void tick() override;
+
+  void resetBlink()
+  {
+    this->setState(OFF);
+    this->led->switchOff();
+  }
 
 private:
   int pin;

@@ -35,7 +35,7 @@ float Sonar::detectDistance()
     else
     {
         float t = tUS / MICROSECONDS_IN_SECOND / 2;
-        float d = t * getSoundSpeed();
+        float d = t * getSoundSpeed()*100;
         return d;
     }
 }

@@ -5,9 +5,6 @@ Scheduler::Scheduler() : numTasks(0), lastRunTime(0) {}
 
 void Scheduler::init(int schedulerPeriod)
 {
-  // Set up the interval for the scheduler
-  // You may want to use a timer or other mechanisms for more accurate timing
-  // For simplicity, using millis() in this example
   this->schedulerPeriod = schedulerPeriod;
   lastRunTime = millis() - schedulerPeriod;
 }

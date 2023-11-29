@@ -6,6 +6,12 @@
 #include "config/config.h"
 #include <Servo.h>
 
+/**
+ * @class CheckInTask
+ * @brief This task opens the gate after the car has been detected.
+ * 
+ * @author Alessandro Monticelli
+*/
 class CheckInTask : public DependantTaskWithState
 {
 public:

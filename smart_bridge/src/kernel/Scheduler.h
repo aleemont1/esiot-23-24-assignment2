@@ -5,6 +5,13 @@
 
 #define MAX_TASKS 50
 
+/**
+ * @class Scheduler
+ * @brief A cooperative non-preemptive scheduler for tasks.
+ * @note The scheduler executes the tick() method of each task at regular intervals.
+ * 
+ * @author Alessandro Monticelli
+ */
 class Scheduler
 {
 private:

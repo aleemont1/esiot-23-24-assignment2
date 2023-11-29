@@ -7,10 +7,6 @@ void TransitTask::tick()
         switch (this->getState())
         {
         case READING_DISTANCE:
-#ifdef __LOG
-            Serial.println("TransitTask::Reading distance");
-#endif
-            this->blinkTask->setActive(true);
             this->distance = sonar->detectDistance();
 #ifdef __LOG
             Serial.println("TransitTask::Distance: " + String(this->distance));
@@ -26,6 +22,11 @@ void TransitTask::tick()
             break;
 
         case CHECKING_DISTANCE:
+            if (!this->blinkTask->isActive())
+            {
+                this->blinkTask->resetBlink();
+                this->blinkTask->setActive(true);
+            }
             this->distance = sonar->detectDistance();
 #ifdef __LOG
             Serial.println("TransitTask::Distance: " + String(this->distance));
@@ -43,12 +44,25 @@ void TransitTask::tick()
                     Serial.println("TransitTask::Closing gate");
 #endif
                     gate->write(0);
-                    this->blinkTask->setActive(false);
+                    if (this->blinkTask->isActive())
+                    {
+                        this->blinkTask->resetBlink();
+                        this->blinkTask->setActive(false);
+                    }
+                    this->L2->switchOn();
                     this->setCompleted();
                 }
             }
             else
             {
+#ifdef __LOG
+                Serial.println("TransitTask::Reading distance");
+#endif
+                if (this->blinkTask->isActive())
+                {
+                    this->blinkTask->resetBlink();
+                    this->blinkTask->setActive(false);
+                }
                 this->setState(READING_DISTANCE);
             }
             break;

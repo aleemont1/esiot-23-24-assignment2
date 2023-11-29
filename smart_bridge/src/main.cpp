@@ -8,7 +8,7 @@
 #include "tasks/WashingTask.h"
 #include "tasks/CheckOutTask.h"
 #include "tasks/CountDown.h"
-#include "tasks/ServoTestTask.h"
+// #include "tasks/ServoTestTask.h"
 
 Scheduler scheduler;
 

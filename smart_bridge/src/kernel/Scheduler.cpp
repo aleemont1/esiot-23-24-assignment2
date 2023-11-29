@@ -22,6 +22,7 @@ void Scheduler::addTask(Task *task)
 
 void Scheduler::schedule()
 {
+  
   unsigned long now = millis();
   if ((now - lastRunTime) >= schedulerPeriod) // It's time for scheduler to tick
   {

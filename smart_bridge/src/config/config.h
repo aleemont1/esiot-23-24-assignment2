@@ -26,6 +26,7 @@
 // SONAR
 #define SONAR_TRIG_PIN 11
 #define SONAR_ECHO_PIN 12
+#define SONAR_MAX_TIME 10000 // 10 ms
 
 // SERVO
 #define SERVO_PIN 9

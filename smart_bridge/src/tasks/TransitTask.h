@@ -14,8 +14,6 @@
  *        If the distance is less than a threshold, the task is completed.
  */
 
-#define SONAR_MAX_TIME 10000
-
 class TransitTask : public DependantTaskWithState
 {
 public:

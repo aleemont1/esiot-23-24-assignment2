@@ -1,15 +1,15 @@
 #ifndef __CHECK_IN_TASK__
 #define __CHECK_IN_TASK__
 
-#include "kernel/TaskWithState.h"
+#include "kernel/DependantTaskWithState.h"
 #include "components/api/Led.h"
 #include "config/config.h"
 #include <Servo.h>
 
-class CheckInTask : public TaskWithState
+class CheckInTask : public DependantTaskWithState
 {
 public:
-    CheckInTask() : TaskWithState()
+    CheckInTask() : DependantTaskWithState()
     {
         this->L1 = new Led(L1_PIN);
         this->L2 = new Led(L2_PIN);

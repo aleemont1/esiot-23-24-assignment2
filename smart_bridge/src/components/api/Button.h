@@ -27,19 +27,19 @@ public:
      *
      * @return true if the button is pressed, false otherwise.
      */
-    virtual bool checkButtonPressStatus() = 0;
+    bool checkButtonPressStatus();
 
     /**
      * @brief Check if the button is released.
      *
      * @return true if the button is released, false otherwise.
      */
-    virtual bool checkButtonReleaseStatus() = 0;
+    bool checkButtonReleaseStatus();
 
     /**
      * @brief Synchronizes the button state with the actual physical button.
      */
-    virtual void updateButtonState();
+    void updateButtonState();
 
     /**
      * @brief Retrieves the last time the button state was synchronized.

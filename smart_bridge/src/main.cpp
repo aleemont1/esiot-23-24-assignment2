@@ -8,15 +8,17 @@
 #include "tasks/WashingTask.h"
 #include "tasks/CheckOutTask.h"
 #include "tasks/CountDown.h"
+#include "kernel/SerialReceiver.h"
 // #include "tasks/ServoTestTask.h"
 
 Scheduler scheduler;
+
+SerialReceiver *serialReceiver;
 
 void setup()
 {
     Serial.begin(9600);
     scheduler.init(50); // NOTE: Might be set higher to use less power, needs testing.
-
     /**CREATE TASKS**/
     // ServoTestTask *servoTask = new ServoTestTask();
     BlinkTask *blinkTask = new BlinkTask(L2_PIN);
@@ -30,6 +32,9 @@ void setup()
     CountDown *countDown = new CountDown(N3); // NOTE: This is just a test.
     countDown->setActive(true);               // NOTE: This is just a test.
 
+    serialReceiver = new SerialReceiver(); //test test test test receiver
+
+
     /**DEPENDENCIES**/
     // checkInTask->addDependency(waitingTask);
     transitTask->addDependency(checkInTask);
@@ -41,6 +46,7 @@ void setup()
     // scheduler.addTask(countDown); // NOTE: This is just a test.
     // scheduler.addTask(waitingTask);
     scheduler.addTask(checkInTask);
+    Serial.println("err:errore");
     scheduler.addTask(transitTask);
     scheduler.addTask(blinkTask);
 
@@ -52,5 +58,7 @@ void setup()
 
 void loop()
 {
+    serialReceiver->readData(); //@EMANUELE this is a test to try the serialReceiver, it must go instantiate when the arduino is in error state
+                                //read the class briefs
     scheduler.schedule();
 }

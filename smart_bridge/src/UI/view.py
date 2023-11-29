@@ -83,7 +83,6 @@ def show_button(): #show button when an error occured
 
 def maintenance_done_click():
     hide_button()
-
     packet_to_send="mnt:done" #mnt stands for maintenance
     send_packet(packet_to_send)
 
@@ -104,27 +103,35 @@ then it is encapsulated into variable and shown inside UI
 '''
 def check_packet(decoded_packet):
     print(decoded_packet)
-    splitted_message=decoded_packet.split(":")
-    message_type=splitted_message[0]
-    message=splitted_message[1]
 
-    if message_type=="err":
-        show_button()
-    elif message_type=="sts": #washing state
-        progress_status.set(message)
-    elif message_type=="cnt": #wash_counter
-        wash_counter.set(message)
-    elif message_type=="out":
-        ui_message.set(message)
-    elif message_type=="tmp":
-        current_temperature.set(message)
+    if ":" in decoded_packet:
+        splitted_message=decoded_packet.split(":")
+        message_type=splitted_message[0]
+        message=splitted_message[1]
+
+        if message_type=="err":
+            show_button()
+            ui_message.set("Errore nella macchina")
+        elif message_type=="sts": #washing state
+            progress_status.set(message)
+        elif message_type=="cnt": #wash_counter
+            wash_counter.set(message)
+        elif message_type=="out":
+            ui_message.set(message)
+        elif message_type=="tmp":
+            current_temperature.set(message)
+        
 
 
 '''
 Send a packet to arduino formatted in a certain way
 '''
 def send_packet(packet):
-    print("TODO: invio un messaggio sulla seriale ad arduino")
+    try:
+        serialInst.write(packet.encode('utf-8'))
+        print(f"GUI: Pacchetto inviato con successo: {packet}")
+    except Exception as e:
+        print(f"Errore durante l'invio del pacchetto: {e}")
 
 
 def update_serial():

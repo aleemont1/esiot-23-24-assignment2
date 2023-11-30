@@ -30,7 +30,7 @@ void setup()
     // WashingTask *washingTask = new WashingTask(blinkTask, new CountDown(N3));
     // TODO: CheckOutTask *checkOutTask = new CheckOutTask(blinkTaskForCheckOutTransit);
     CountDown *countDown = new CountDown(N3); // NOTE: This is just a test.
-    countDown->setActive(true);               // NOTE: This is just a test.
+    countDown->tick();                        // NOTE: This is just a test.
 
     serialReceiver = new SerialReceiver(); //test test test test receiver
 

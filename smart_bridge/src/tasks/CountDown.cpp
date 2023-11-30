@@ -7,13 +7,6 @@ CountDown::CountDown(int countDown) : Task()
     this->init(1000);
 }
 
-void CountDown::tick()
-{
-    printCountDown();
-    decreaseCountDown();
-    endsCountDown();
-}
-
 int CountDown::getCountDown()
 {
     return countDown;
@@ -92,4 +85,11 @@ void CountDown::resumeCountDown()
         this->pausedCountDown = -1;
         this->setActive(true);
     }
+}
+
+void CountDown::tick()
+{
+    printCountDown();
+    decreaseCountDown();
+    endsCountDown();
 }

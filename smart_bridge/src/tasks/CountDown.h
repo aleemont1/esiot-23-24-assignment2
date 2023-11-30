@@ -4,12 +4,6 @@
 #include "kernel/Task.h"
 
 /**
- * @brief The default value for the count down task.
- *
- */
-#define DEFAULT_COUNTDOWN 15
-
-/**
  * @brief A countdown timer task class.
  *
  * This class provides a countdown timer that can be started, paused, resumed, and stopped.

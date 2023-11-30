@@ -1,9 +1,10 @@
 #include "CountDown.h"
+#include "config/config.h"
 #include "Arduino.h"
 
 CountDown::CountDown(int countDown) : Task()
 {
-    this->countDown = DEFAULT_COUNTDOWN;
+    this->countDown = N3;
     this->init(1000);
 }
 
@@ -14,7 +15,7 @@ int CountDown::getCountDown()
 
 void CountDown::resetCountDown(int newCountDown)
 {
-    this->countDown = DEFAULT_COUNTDOWN;
+    this->countDown = N3;
 }
 
 void CountDown::decreaseCountDown(int decrement = 1)
@@ -57,7 +58,7 @@ void CountDown::endsCountDown()
         this->setCompleted();
         this->printsEndsCountdown();
         this->setActive(false);
-        this->countDown = DEFAULT_COUNTDOWN;
+        this->countDown = N3;
     }
 }
 
@@ -74,7 +75,7 @@ bool CountDown::isCountDownActive()
 void CountDown::stopCountDown()
 {
     this->setActive(false);
-    this->countDown = DEFAULT_COUNTDOWN;
+    this->countDown = N3;
 }
 
 void CountDown::resumeCountDown()
@@ -89,6 +90,7 @@ void CountDown::resumeCountDown()
 
 void CountDown::tick()
 {
+    startCountDown();
     printCountDown();
     decreaseCountDown();
     endsCountDown();

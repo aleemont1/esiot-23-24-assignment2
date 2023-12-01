@@ -4,6 +4,7 @@
 
 CountDown::CountDown(int countDown) : Task()
 {
+    this->lcd = new LCD(0x27, 16, 2);
     this->countDown = N3;
     this->init(1000);
 }
@@ -46,9 +47,10 @@ void CountDown::startCountDown()
     this->setActive(true);
 }
 
-void CountDown::printCountDown()
+void CountDown::printCountDown(int count)
 {
-    Serial.println("ContDown::Current countdown: " + String(countDown));
+    Serial.println("Countdown: " + String(countDown) + "seconds");
+    lcd->write(("Countdown: " + String(countDown)).c_str(), 0, 0);
 }
 
 void CountDown::endsCountDown()
@@ -91,7 +93,7 @@ void CountDown::resumeCountDown()
 void CountDown::tick()
 {
     startCountDown();
-    printCountDown();
     decreaseCountDown();
+    printCountDown(countDown);
     endsCountDown();
 }

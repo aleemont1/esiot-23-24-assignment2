@@ -1,27 +1,25 @@
 #include "CountDown.h"
-#include "config/config.h"
-#include "Arduino.h"
 
 CountDown::CountDown(int countDown) : Task()
 {
     this->lcd = new LCD(0x27, 16, 2);
-    this->countDown = N3;
+    this->resetCountDown(N3);
     this->init(1000);
 }
 
 int CountDown::getCountDown()
 {
-    return countDown;
+    return this->countDown;
 }
 
 void CountDown::resetCountDown(int newCountDown)
 {
-    this->countDown = N3;
+    this->countDown = newCountDown;
 }
 
-void CountDown::decreaseCountDown(int decrement = 1)
+void CountDown::decreaseCountDown(int decrement)
 {
-    if (this->countDown - decrement <= 0)
+    if (getCountDown() - decrement < 0)
     {
         endsCountDown();
     }
@@ -31,14 +29,14 @@ void CountDown::decreaseCountDown(int decrement = 1)
     }
 }
 
-void CountDown::increaseCountDown(int increment = 1)
+void CountDown::increaseCountDown(int increment)
 {
     this->countDown += increment;
 }
 
 void CountDown::pauseCountDown()
 {
-    this->pausedCountDown = this->countDown;
+    this->pausedCountDown = getCountDown();
     this->setActive(false);
 }
 
@@ -47,20 +45,21 @@ void CountDown::startCountDown()
     this->setActive(true);
 }
 
-void CountDown::printCountDown(int count)
+void CountDown::printCountDown()
 {
-    Serial.println("Countdown: " + String(countDown) + "seconds");
-    lcd->write(("Countdown: " + String(countDown)).c_str(), 0, 0);
+    int count = getCountDown();
+    Serial.println("Countdown: " + String(count) + " seconds");
+    lcd->write(("Countdown: " + String(count)).c_str(), 0, 0);
 }
 
 void CountDown::endsCountDown()
 {
-    if (countDown <= 0)
+    if (getCountDown() <= 0)
     {
-        this->setCompleted();
         this->printsEndsCountdown();
-        this->setActive(false);
-        this->countDown = N3;
+        this->resetCountDown(N3);
+        Serial.println("CountDown::Countdown resetted");
+        this->setCompleted();
     }
 }
 
@@ -77,7 +76,7 @@ bool CountDown::isCountDownActive()
 void CountDown::stopCountDown()
 {
     this->setActive(false);
-    this->countDown = N3;
+    this->resetCountDown(N3);
 }
 
 void CountDown::resumeCountDown()
@@ -93,7 +92,7 @@ void CountDown::resumeCountDown()
 void CountDown::tick()
 {
     startCountDown();
+    printCountDown();
     decreaseCountDown();
-    printCountDown(countDown);
     endsCountDown();
 }

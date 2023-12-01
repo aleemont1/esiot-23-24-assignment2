@@ -24,24 +24,13 @@ public:
         this->tempSensor = new Temp(TMP_PIN);
         this->lcd = new LCD(0x27, 16, 2);
         this->blinkTask = blinkTask;
-        this->blinkTask->init(500);
+        this->blinkTask->init(500); // Blink every 500 ms the red led
         this->blinkTask->setActive(false);
         this->countDownTask = countDownTask;
-        this->countDownTask->init(1000);
         this->init();
         this->setState(START_WASHING);
     };
     void tick() override;
-
-    /**
-     * @brief This function updates the countdown displayed on the UI (actually doing it on LCD display)
-     *
-     * @param count The countdown to be displayed on the UI (actually on LCD display)
-     */
-    void updateCountdownUI(int count)
-    {
-        lcd->write(("Countdown: " + String(countDown)).c_str(), 0, 0);
-    }
 
 private:
     enum state

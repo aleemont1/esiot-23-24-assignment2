@@ -2,6 +2,7 @@
 #define __COUNT_DOWN_TASK__
 
 #include "kernel/Task.h"
+#include "components/api/LCD.h"
 
 /**
  * @brief A countdown timer task class.
@@ -65,10 +66,11 @@ public:
     void startCountDown();
 
     /**
-     * @brief Print the countdown value to the serial monitor.
+     * @brief This function print the updated value of the countdown on the LCD display.
      *
+     * @param count The countdown to be displayed on the LCD display.
      */
-    void printCountDown();
+    void printCountDown(int count);
 
     /**
      * @brief Ends the countdown task.
@@ -104,6 +106,7 @@ public:
 private:
     int countDown;            ///< The current countdown value
     int pausedCountDown = -1; ///< The countdown value when the countdown was paused, or -1 if the countdown was not paused.
+    LCD *lcd;                 ///< The LCD display
 };
 
 #endif // __COUNT_DOWN_TASK__

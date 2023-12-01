@@ -1,39 +1,20 @@
 #include "../api/Button.h"
-#include "config/config.h"
 #include "Arduino.h"
 
-Button::Button(int pin) : buttonState(BUTTON_RELEASED)
+Button::Button(int pin)
 {
-    this->buttonPin = BUTTON_PIN;
-    lastTimeButtonWasInSync = 0;
+    this->pin = pin;
     pinMode(pin, INPUT);
-    updateButtonState();
+    sync();
 }
 
-bool Button::checkButtonPressStatus()
+bool Button::isPressed()
 {
-    return buttonState == BUTTON_PRESSED;
+    return pressed;
 }
 
-bool Button::checkButtonReleaseStatus()
+void Button::sync()
 {
-    return buttonState == BUTTON_RELEASED;
-}
-
-void Button::updateButtonState()
-{
-    // If the button is pressed, the pin will be HIGH.
-    buttonState = digitalRead(buttonPin) == HIGH ? BUTTON_PRESSED : BUTTON_RELEASED;
-    // Update the last time the button state was synchronized.
-    setLastButtonSyncTime(millis());
-}
-
-void Button::setLastButtonSyncTime(long time)
-{
-    lastTimeButtonWasInSync = time;
-}
-
-long Button::retrieveLastButtonSyncTime()
-{
-    return lastTimeButtonWasInSync;
+    pressed = digitalRead(pin) == HIGH;
+    updateSyncTime(millis());
 }

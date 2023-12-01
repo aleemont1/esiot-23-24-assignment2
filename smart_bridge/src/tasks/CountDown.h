@@ -3,6 +3,8 @@
 
 #include "kernel/Task.h"
 #include "components/api/LCD.h"
+#include "config/config.h"
+#include "Arduino.h"
 
 /**
  * @brief A countdown timer task class.
@@ -45,14 +47,14 @@ public:
      *
      * @param decrement The amount to decrease the countdown value by.
      */
-    void decreaseCountDown(int decrement);
+    void decreaseCountDown(int decrement = 1);
 
     /**
      * @brief Increase the countdown value.
      *
      * @param increment The amount to increase the countdown value by.
      */
-    void increaseCountDown(int increment);
+    void increaseCountDown(int increment = 1);
 
     /**
      * @brief Pause the countdown task by saving its value.
@@ -70,7 +72,7 @@ public:
      *
      * @param count The countdown to be displayed on the LCD display.
      */
-    void printCountDown(int count);
+    void printCountDown();
 
     /**
      * @brief Ends the countdown task.

@@ -8,6 +8,7 @@
 #include "components/api/LCD.h"
 #include "config/config.h"
 #include "tasks/CountDown.h"
+#include "tasks/TemperatureTask.h"
 
 /**
  * @class CarWashingTask
@@ -16,7 +17,7 @@
 class WashingTask : public DependantTaskWithState
 {
 public:
-    WashingTask(BlinkTask *blinkTask, CountDown *countDownTask) : DependantTaskWithState()
+    WashingTask(BlinkTask *blinkTask, CountDown *countDownTask, TemperatureTask *temperatureTask) : DependantTaskWithState()
     {
         Serial.println("WashingTask created");
         this->L2 = new Led(L2_PIN);
@@ -24,13 +25,25 @@ public:
         this->tempSensor = new Temp(TMP_PIN);
         this->lcd = new LCD(0x27, 16, 2);
         this->blinkTask = blinkTask;
-        this->blinkTask->init(500); // Blink every 500 ms the red led
-        this->blinkTask->setActive(false);
+        this->blinkTask->init(500);        // Blink every 500 ms the red led
+        this->blinkTask->setActive(false); // TODO: Check if this is necessary
         this->countDownTask = countDownTask;
+        this->temperatureTask = temperatureTask;
         this->init();
         this->setState(START_WASHING);
     };
+
+    /**
+     * @brief Tick function that is called periodically.
+     * 
+     */
     void tick() override;
+
+    /**
+     * @brief Prints the message "Washing complete, you can leave the area" on the LCD display.
+     *
+     */
+    void printWashingCompletedMessage();
 
 private:
     enum state
@@ -44,12 +57,13 @@ private:
     int savedCountDown;
     unsigned long savedTimeInState;
     int countDown;
-    Led *L2;          // Red led
-    Led *L3;          // Green led
-    Temp *tempSensor; // Temperature sensor
-    LCD *lcd;         // The LCD display
-    Task *blinkTask;  // The blink task for the leds
-    CountDown *countDownTask;
+    Led *L2;                          // Red led
+    Led *L3;                          // Green led
+    Temp *tempSensor;                 // Temperature sensor
+    LCD *lcd;                         // The LCD display
+    Task *blinkTask;                  // The blink task for the leds
+    CountDown *countDownTask;         // The countdown task
+    TemperatureTask *temperatureTask; // The temperature task
 };
 
 #endif // __WASHING_TASK__

@@ -19,7 +19,7 @@ SerialReceiver *serialReceiver;
 void setup()
 {
     Serial.begin(9600);
-    scheduler.init(50); // NOTE: Might be set higher to use less power, needs testing.
+    scheduler.init(100); // NOTE: Might be set higher to use less power, needs testing.
     /**CREATE TASKS**/
     // ServoTestTask *servoTask = new ServoTestTask();
     BlinkTask *blinkTask = new BlinkTask(L2_PIN);

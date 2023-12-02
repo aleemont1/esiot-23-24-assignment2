@@ -4,7 +4,7 @@
 #include "kernel/DependantTaskWithState.h"
 #include "components/api/Led.h"
 #include "config/config.h"
-#include <Servo.h>
+#include "components/api/ServoImpl.h"
 
 /**
  * @class CheckInTask
@@ -19,8 +19,7 @@ public:
     {
         this->L1 = new Led(L1_PIN);
         this->L2 = new Led(L2_PIN);
-        this->gate = new Servo();
-        this->gate->attach(SERVO_PIN);
+        this->gate = new ServoImpl(SERVO_PIN);
         this->init();
         this->setState(STARTED);
         Serial.println("CheckInTask created");
@@ -35,7 +34,7 @@ private:
     };
     Led *L1;
     Led *L2;
-    Servo *gate;
+    ServoImpl *gate;
 };
 
 #endif

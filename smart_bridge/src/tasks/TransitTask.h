@@ -6,13 +6,12 @@
 #include "config/config.h"
 #include "components/api/Sonar.h"
 #include "components/api/Led.h"
-
-#include <Servo.h>
+#include "components/api/ServoImpl.h"
 /**
  * @class TransitTask
  * @brief This task reads the distance of the car while entering the washing area.
  *        If the distance is less than a threshold, the task is completed.
- * 
+ *
  * @author Alessandro Monticelli
  */
 class TransitTask : public DependantTaskWithState
@@ -28,9 +27,7 @@ public:
         this->sonar = new Sonar(SONAR_TRIG_PIN, SONAR_ECHO_PIN, SONAR_MAX_TIME);
         this->L2 = new Led(L2_PIN);
         // TODO: FIX SERVO.
-        this->gate = new Servo();
-        this->gate->detach();
-        this->gate->attach(SERVO_PIN);
+        this->gate = new ServoImpl(SERVO_PIN);
         this->blinkTask = blinkTask;
         this->blinkTask->init(100);
         this->blinkTask->setActive(false);
@@ -48,7 +45,7 @@ private:
     };
     Led *L2;
     Sonar *sonar;
-    Servo *gate;
+    ServoImpl *gate;
     float distance;
     BlinkTask *blinkTask;
 };

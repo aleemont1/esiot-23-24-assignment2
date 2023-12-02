@@ -6,7 +6,7 @@
 #include "components/api/Led.h"
 #include "components/api/Sonar.h"
 #include "config/config.h"
-#include <Servo.h>
+#include "components/api/ServoImpl.h"
 
 class CheckOutTask : public DependantTaskWithState
 {
@@ -17,9 +17,7 @@ public:
         this->L2 = new Led(L2_PIN);
         this->L3 = new Led(L3_PIN);
         this->sonar = new Sonar(SONAR_TRIG_PIN, SONAR_ECHO_PIN, SONAR_MAX_TIME);
-        this->gate = new Servo();
-        this->gate->detach();
-        this->gate->attach(SERVO_PIN);
+        this->gate = new ServoImpl(SERVO_PIN);
         this->blinkTask = blinkTask;
         this->blinkTask->isCompleted();
         this->blinkTask->setActive(false);
@@ -40,7 +38,7 @@ private:
 
     Led *L2;
     Led *L3;
-    Servo *gate;
+    ServoImpl *gate;
     Sonar *sonar;
     Task *blinkTask;
     float detectedDistance; // Distance of the car from the sensor

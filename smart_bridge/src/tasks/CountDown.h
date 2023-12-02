@@ -2,6 +2,9 @@
 #define __COUNT_DOWN_TASK__
 
 #include "kernel/Task.h"
+#include "components/api/LCD.h"
+#include "config/config.h"
+#include "Arduino.h"
 
 /**
  * @brief A countdown timer task class.
@@ -44,14 +47,14 @@ public:
      *
      * @param decrement The amount to decrease the countdown value by.
      */
-    void decreaseCountDown(int decrement);
+    void decreaseCountDown(int decrement = 1);
 
     /**
      * @brief Increase the countdown value.
      *
      * @param increment The amount to increase the countdown value by.
      */
-    void increaseCountDown(int increment);
+    void increaseCountDown(int increment = 1);
 
     /**
      * @brief Pause the countdown task by saving its value.
@@ -65,8 +68,9 @@ public:
     void startCountDown();
 
     /**
-     * @brief Print the countdown value to the serial monitor.
+     * @brief This function print the updated value of the countdown on the LCD display.
      *
+     * @param count The countdown to be displayed on the LCD display.
      */
     void printCountDown();
 
@@ -104,6 +108,7 @@ public:
 private:
     int countDown;            ///< The current countdown value
     int pausedCountDown = -1; ///< The countdown value when the countdown was paused, or -1 if the countdown was not paused.
+    LCD *lcd;                 ///< The LCD display
 };
 
 #endif // __COUNT_DOWN_TASK__

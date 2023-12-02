@@ -79,10 +79,22 @@ public:
     void setCriticalTemperature(int criticalTemperature);
 
     /**
-     * @brief Print the message "Maintenance required" on the PC Console Dashboard.
+     * @brief Print the message "Maintenance required" on the LCD display.
      *
      */
     void temperatureMaintenanceMessage();
+
+    /**
+     * @brief Used to keep track of the time when the temperature first exceeds MAXTEMP and then check if N5 seconds have passed since that time.
+     *
+     */
+    unsigned long timeExceededMaxTemp = 0;
+
+    /**
+     * @brief Print the message "Critical temperature reached!" on the serial monitor.
+     *
+     */
+    void criticalTemperatureReachedMessage();
 
 private:
     int temperature;

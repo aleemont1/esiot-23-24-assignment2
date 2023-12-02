@@ -25,7 +25,6 @@ void CheckOutTask::tick()
         case OPENING_GATE:
             Serial.println("CheckOutTask::Opening the gate");
             gate->write(90);
-            delay(2000); // Simulates the time needed to open the gate
             Serial.println("CheckOutTask::Opened the gate");
             this->setState(CHECKING_DISTANCE);
             break;

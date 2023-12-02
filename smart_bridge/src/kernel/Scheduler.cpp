@@ -1,5 +1,5 @@
 #include "Scheduler.h"
-#include <TimerOne.h>
+#include "Arduino.h"
 
 Scheduler::Scheduler() : numTasks(0), lastRunTime(0) {}
 

@@ -56,6 +56,7 @@ void CountDown::endsCountDown()
 {
     if (getCountDown() <= 0)
     {
+        this->isCompleted();
         this->printsEndsCountdown();
         this->resetCountDown(N3);
         Serial.println("CountDown::Countdown resetted");

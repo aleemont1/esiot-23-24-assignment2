@@ -32,7 +32,6 @@ void TemperatureTask::setTemperature(int temperature)
     this->temperature = temperature;
 }
 
-
 void TemperatureTask::printTemperature()
 {
     int temp = getTemperature();
@@ -44,16 +43,33 @@ bool TemperatureTask::checkForCriticalTemperature()
 {
     if (temperature > MAXTEMP)
     {
-        Serial.println("Critical temperature reached!");
-        this->temperatureMaintenanceMessage();
-        return true;
+        if (timeExceededMaxTemp == 0)
+        {
+            timeExceededMaxTemp = millis();
+        }
+        else if (millis() - timeExceededMaxTemp >= N5 * 1000)
+        {
+            this->criticalTemperatureReachedMessage();
+            this->temperatureMaintenanceMessage();
+            return true;
+        }
+        else
+        {
+            timeExceededMaxTemp = 0;
+        }
+        return false;
     }
-    return false;
+}
+
+void TemperatureTask::criticalTemperatureReachedMessage()
+{
+    Serial.println("Critical temperature reached!");
 }
 
 void TemperatureTask::temperatureMaintenanceMessage()
 {
     Serial.println("Detected a Problem - Please Wait");
+    lcd->write("Detected a Problem - Please Wait: ", 0, 0);
 }
 
 void TemperatureTask::tick()

@@ -49,7 +49,6 @@ void CountDown::startCountDown()
 void CountDown::printCountDown()
 {
     int count = getCountDown();
-    // Serial.println("Countdown: " + String(count) + " seconds");
     lcd->write(("Countdown: " + String(count)).c_str(), 0, 0);
 }
 

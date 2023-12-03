@@ -9,6 +9,8 @@
 #include "config/config.h"
 #include "tasks/CountDown.h"
 #include "tasks/TemperatureTask.h"
+#include "kernel/SerialReceiver.h"
+#include "components/api/ServoImpl.h"
 
 /**
  * @class CarWashingTask
@@ -24,18 +26,19 @@ public:
         this->L3 = new Led(L3_PIN);
         this->tempSensor = new Temp(TMP_PIN);
         this->lcd = new LCD(0x27, 16, 2);
+        this->gate = new ServoImpl(SERVO_PIN);
         this->blinkTask = blinkTask;
         this->blinkTask->init(500);        // Blink every 500 ms the red led
         this->blinkTask->setActive(false); // TODO: Check if this is necessary
         this->countDownTask = countDownTask;
         this->temperatureTask = temperatureTask;
-        this->init();
+        this->init(1000);
         this->setState(START_WASHING);
     };
 
     /**
      * @brief Tick function that is called periodically.
-     * 
+     *
      */
     void tick() override;
 
@@ -49,9 +52,11 @@ private:
     enum state
     {
         START_WASHING,
-        COUNTDOWN,
-        ERROR_RECOVERY,
-        ERROR
+        STARTS_COUNTDOWN,
+        ENDS_COUNTDOWN,
+        ERROR,
+        OPENS_GATE,
+        CLOSES_GATE
     };
 
     int savedCountDown;
@@ -64,6 +69,8 @@ private:
     Task *blinkTask;                  // The blink task for the leds
     CountDown *countDownTask;         // The countdown task
     TemperatureTask *temperatureTask; // The temperature task
+    SerialReceiver *serialReceiver;   // The serial receiver
+    ServoImpl *gate;                  // The servo used to open and close the gate
 };
 
 #endif // __WASHING_TASK__

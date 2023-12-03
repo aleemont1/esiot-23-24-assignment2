@@ -2,46 +2,68 @@
 #define __CHECK_OUT_TASK__
 
 #include "kernel/DependantTaskWithState.h"
-#include "BlinkTask.h"
-#include "components/api/Led.h"
-#include "components/api/Sonar.h"
 #include "config/config.h"
+#include "components/api/Sonar.h"
+#include "components/api/Led.h"
 #include "components/api/ServoImpl.h"
 
+/**
+ * @brief Manages the process of a car exiting the transit area.
+ *
+ * This task is responsible for managing the process of a car exiting the transit area.
+ * It reads the distance from the sonar sensor, checks if the distance is within a certain range,
+ * and controls the gate and the L3 LED accordingly.
+ *
+ * @extends DependantTaskWithState
+ */
 class CheckOutTask : public DependantTaskWithState
 {
 public:
-    CheckOutTask(BlinkTask *blinkTask) : DependantTaskWithState()
-    {
-        Serial.println("CheckOutTask created");
-        this->L2 = new Led(L2_PIN);
-        this->L3 = new Led(L3_PIN);
-        this->sonar = new Sonar(SONAR_TRIG_PIN, SONAR_ECHO_PIN, SONAR_MAX_TIME);
-        this->gate = new ServoImpl(SERVO_PIN);
-        this->blinkTask = blinkTask;
-        this->blinkTask->isCompleted();
-        this->blinkTask->setActive(false);
-        this->L3->switchOn();
-        this->init();
-        this->setState(OPENING_GATE);
-    }
+    /**
+     * @brief Construct a new Exit Transit Task object
+     *
+     */
+    CheckOutTask();
+
+    /**
+     * @brief Called periodically to update the task's state.
+     *
+     * This function is overridden from DependantTaskWithState.
+     */
     void tick() override;
 
+    /**
+     * @brief Handles the turning on of the L3 LED.
+     *
+     * This function is called when the task's state is TURN_ON_L3.
+     */
+    void handleTurnOnL3();
+
+    /**
+     * @brief Handles the opening of the gate.
+     *
+     * This function is called when the task's state is OPENS_GATE.
+     */
+    void handleOpensGate();
+
 private:
+    /**
+     * @brief Enum for the possible states of the task.
+     *
+     */
     enum state
     {
-        OPENING_GATE,
-        CHECKING_DISTANCE,
-        CLOSING_GATE,
-        TURN_OFF_L3
+        TURN_ON_L3, ///< The task is currently turning on the L3 LED.
+        OPENS_GATE, ///< The task is currently opening the gate.
     };
 
-    Led *L2;
-    Led *L3;
-    ServoImpl *gate;
-    Sonar *sonar;
-    Task *blinkTask;
-    float detectedDistance; // Distance of the car from the sensor
+    Led *L3;                           ///< Pointer to the L3 LED object
+    Sonar *sonar;                      ///< Pointer to the sonar object
+    ServoImpl *gate;                   ///< Pointer to the ServoImpl object that controls the gate.
+    float distance;                    ///< The current distance read from the sonar sensor.
+    unsigned long timeInExit = 0;      ///< The time in milliseconds when the car entered the exit area.
+    const int GATE_OPEN_POSITION = 90; ///< The position of the gate when it is open.
+    const int GATE_CLOSE_POSITION = 0; ///< The position of the gate when it is closed.
 };
 
 #endif // __CHECK_OUT_TASK__

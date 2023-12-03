@@ -9,35 +9,63 @@
 #include "config/config.h"
 #include "tasks/CountDown.h"
 #include "tasks/TemperatureTask.h"
+#include "kernel/SerialReceiver.h"
+#include "components/api/ServoImpl.h"
 
 /**
- * @class CarWashingTask
- * @brief Represents the car washing task.
+ * @brief Manages the car washing process.
+ *
+ * This class is responsible for managing the car washing process. It controls the blinking of LEDs,
+ * the countdown, temperature monitoring, and communicates with the serial receiver.
+ *
+ * @extends DependantTaskWithState
  */
 class WashingTask : public DependantTaskWithState
 {
 public:
-    WashingTask(BlinkTask *blinkTask, CountDown *countDownTask, TemperatureTask *temperatureTask) : DependantTaskWithState()
-    {
-        Serial.println("WashingTask created");
-        this->L2 = new Led(L2_PIN);
-        this->L3 = new Led(L3_PIN);
-        this->tempSensor = new Temp(TMP_PIN);
-        this->lcd = new LCD(0x27, 16, 2);
-        this->blinkTask = blinkTask;
-        this->blinkTask->init(500);        // Blink every 500 ms the red led
-        this->blinkTask->setActive(false); // TODO: Check if this is necessary
-        this->countDownTask = countDownTask;
-        this->temperatureTask = temperatureTask;
-        this->init();
-        this->setState(START_WASHING);
-    };
+    /**
+     * @brief Construct a new WashingTask object.
+     *
+     * @param blinkTask Pointer to the BlinkTask object.
+     * @param countDownTask Pointer to the CountDown object.
+     * @param temperatureTask Pointer to the TemperatureTask object.
+     */
+    WashingTask(BlinkTask *blinkTask, CountDown *countDownTask, TemperatureTask *temperatureTask);
 
     /**
-     * @brief Tick function that is called periodically.
-     * 
+     * @brief Called periodically to update the task's state.
+     *
+     * This function is overridden from DependantTaskWithState.
      */
     void tick() override;
+
+    /**
+     * @brief Handles the start of the washing process.
+     *
+     * This function is called when the task's state is START_WASHING.
+     */
+    void handleStartWashing();
+
+    /**
+     * @brief Handles the end of the countdown.
+     *
+     * This function is called when the task's state is ENDS_COUNTDOWN.
+     */
+    void handleStartsCountdown();
+
+    /**
+     * @brief Handles the end of the countdown.
+     *
+     * This function is called when the task's state is ENDS_COUNTDOWN.
+     */
+    void handleEndsCountdown();
+
+    /**
+     * @brief Handles any errors that occur during the washing process.
+     *
+     * This function is called when the task's state is ERROR.
+     */
+    void handleError();
 
     /**
      * @brief Prints the message "Washing complete, you can leave the area" on the LCD display.
@@ -46,24 +74,30 @@ public:
     void printWashingCompletedMessage();
 
 private:
+    /**
+     * @brief Enum for the possible states of the task.
+     *
+     */
     enum state
     {
-        START_WASHING,
-        COUNTDOWN,
-        ERROR_RECOVERY,
-        ERROR
+        START_WASHING,    ///< The task is currently starting the washing process.
+        STARTS_COUNTDOWN, ///< The task is currently starting the countdown.
+        ENDS_COUNTDOWN,   ///< The task is currently ending the countdown.
+        ERROR,            ///< The task is currently handling an error.
     };
 
     int savedCountDown;
     unsigned long savedTimeInState;
     int countDown;
-    Led *L2;                          // Red led
-    Led *L3;                          // Green led
-    Temp *tempSensor;                 // Temperature sensor
-    LCD *lcd;                         // The LCD display
-    Task *blinkTask;                  // The blink task for the leds
-    CountDown *countDownTask;         // The countdown task
-    TemperatureTask *temperatureTask; // The temperature task
+    Led *L2;                          ///< Pointer to the L2 LED object.
+    Led *L3;                          ///< Pointer to the L3 LED object.
+    Temp *tempSensor;                 ///< Pointer to the temperature sensor object.
+    LCD *lcd;                         ///< Pointer to the LCD object.
+    Task *blinkTask;                  ///< Pointer to the blink task.
+    CountDown *countDownTask;         ///< Pointer to the countdown task.
+    TemperatureTask *temperatureTask; ///< Pointer to the temperature task.
+    SerialReceiver *serialReceiver;   ///< Pointer to the serial receiver object.
+    ServoImpl *gate;                  ///< Pointer to the ServoImpl object that controls the gate.
 };
 
 #endif // __WASHING_TASK__

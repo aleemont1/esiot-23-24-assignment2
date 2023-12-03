@@ -70,7 +70,6 @@ public:
     /**
      * @brief This function print the updated value of the countdown on the LCD display.
      *
-     * @param count The countdown to be displayed on the LCD display.
      */
     void printCountDown();
 

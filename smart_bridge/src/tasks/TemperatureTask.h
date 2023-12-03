@@ -96,6 +96,12 @@ public:
      */
     void criticalTemperatureReachedMessage();
 
+    /**
+     * @brief Start monitoring the temperature and print it on the LCD display.
+     *
+     */
+    void startMonitoringTemperature();
+
 private:
     int temperature;
     int criticalTemperature;

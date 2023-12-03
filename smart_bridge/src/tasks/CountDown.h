@@ -105,10 +105,24 @@ public:
      */
     void resumeCountDown();
 
+    /**
+     * @brief Set the status of the countdown task.
+     *
+     * @param value The value to set the status to (true if active, false otherwise).
+     */
+    void setStatus(bool value);
+
+    /**
+     * @brief Get the status of the countdown task.
+     *
+     */
+    bool getStatus();
+
 private:
     int countDown;            ///< The current countdown value
     int pausedCountDown = -1; ///< The countdown value when the countdown was paused, or -1 if the countdown was not paused.
     LCD *lcd;                 ///< The LCD display
+    bool status;              ///< The status of the countdown task
 };
 
 #endif // __COUNT_DOWN_TASK__

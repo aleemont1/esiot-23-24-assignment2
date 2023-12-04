@@ -86,9 +86,10 @@ private:
         ERROR,            ///< The task is currently handling an error.
     };
 
-    int savedCountDown;
-    unsigned long savedTimeInState;
-    int countDown;
+    int savedCountDown;               ///< The saved value of the countdown.
+    unsigned long savedTimeInState;   ///< The time that the task has been in the current state.
+    int checkInterval = 5000;         ///< 5 seconds
+    int countDown;                    ///< The current value of the countdown.
     Led *L2;                          ///< Pointer to the L2 LED object.
     Led *L3;                          ///< Pointer to the L3 LED object.
     Temp *tempSensor;                 ///< Pointer to the temperature sensor object.

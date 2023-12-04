@@ -7,6 +7,7 @@
 #include "tasks/TransitTask.h"
 #include "tasks/WaitingTask.h"
 #include "tasks/WashingTask.h"
+#include "tasks/SleepingTask.h"
 #include "tasks/CheckOutTask.h"
 #include "tasks/CountDown.h"
 #include "tasks/WaitForClickTask.h"
@@ -20,6 +21,7 @@
 Scheduler scheduler;
 
 SerialReceiver *serialReceiver;
+LCD *lcd;
 
 void setup()
 {

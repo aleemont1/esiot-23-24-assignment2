@@ -1,22 +1,25 @@
 #ifndef __TEMPERATURE_TASK__
 #define __TEMPERATURE_TASK__
 
-#include "kernel/Task.h"
+#include "kernel/TaskWithTimer.h"
 #include "Arduino.h"
 #include "config/config.h"
 #include "components/api/LCD.h"
 
 /**
- * @brief A task that reads the temperature from a sensor.
+ * @brief Manages the temperature reading and monitoring.
  *
+ * This class is responsible for reading the temperature from a sensor, converting the voltage to temperature,
+ * checking for critical temperature, and printing the temperature and related messages.
+ *
+ * @extends Task
  */
-class TemperatureTask : public Task
+class TemperatureTask : public TaskWithTimer
 {
 public:
     /**
      * @brief Construct a new Temperature Task object
      *
-     * @param temperature The temperature read from the sensor in Celsius degrees.
      */
     TemperatureTask();
 
@@ -38,7 +41,7 @@ public:
      * @brief Convert the voltage value to a temperature value.
      *
      * @param voltage The voltage value read from the sensor.
-     * @return int The temperature value converted from the voltage value.
+     * @return float The temperature value converted from the voltage value.
      * @note assumes that is used the TMP36 temperature sensor.
      */
     float convertVoltageToTemperature(float voltage);
@@ -60,21 +63,20 @@ public:
     /**
      * @brief Print the temperature value on the PC Console Dashboard.
      *
-     * @param temperature The temperature value read from the sensor.
      */
     void printTemperature();
 
     /**
      * @brief Handle the case where the temperature is critical.
      *
-     * @param temperature The temperature value read from the sensor that is considerable as critical.
+     * @return bool True if the temperature is critical, false otherwise.
      */
     bool checkForCriticalTemperature();
 
     /**
      * @brief Set the Critical Temperature value.
      *
-     * @param criticalTemperature The temperature value that is considerable as critical (muste be over 30 Celsius degrees)
+     * @param criticalTemperature The temperature value that is considerable as critical (must be over MAXTEMP Celsius degrees)
      */
     void setCriticalTemperature(int criticalTemperature);
 
@@ -85,21 +87,26 @@ public:
     void temperatureMaintenanceMessage();
 
     /**
-     * @brief Used to keep track of the time when the temperature first exceeds MAXTEMP and then check if N5 seconds have passed since that time.
-     *
-     */
-    unsigned long timeExceededMaxTemp = 0;
-
-    /**
      * @brief Print the message "Critical temperature reached!" on the serial monitor.
      *
      */
     void criticalTemperatureReachedMessage();
 
+    /**
+     * @brief Start monitoring the temperature and print it on the LCD display.
+     *
+     */
+    void startMonitoringTemperature();
+
 private:
-    int temperature;
-    int criticalTemperature;
-    LCD *lcd;
+    int temperature;                                ///< The current temperature.
+    int criticalTemperature;                        ///< The temperature value that is considered as critical.
+    LCD *lcd;                                       ///< Pointer to the LCD object.
+    unsigned long timeExceededMaxTemp = 0;          ///<  Used to keep track of the time when the temperature first exceeds MAXTEMP and then check if N5 seconds have passed since that time.
+    static constexpr float ADC_VOLTAGE_RANGE = 5.0; ///< The voltage range of the ADC.
+    static constexpr float ADC_RESOLUTION = 1024.0; ///< The resolution of the ADC.
+    float voltageConversionFactor;                  ///< The factor to convert voltage to temperature.
+    float voltageOffset;                            ///< The offset to convert voltage to temperature.
 };
 
 #endif // __TEMPERATURE_TASK__

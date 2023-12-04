@@ -9,6 +9,8 @@ void TransitTask::tick()
             switch (this->getState())
             {
             case READING_DISTANCE:
+                this->lcd->write("Proceed to the", 0, 0);
+                this->lcd->write("washing area!", 0, 1);
                 this->L2->switchOn();
                 this->distance = sonar->detectDistance();
 #ifdef __LOG

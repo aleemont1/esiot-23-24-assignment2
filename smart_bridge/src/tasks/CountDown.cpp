@@ -2,6 +2,8 @@
 
 CountDown::CountDown(int countDown) : Task()
 {
+    Serial.println("CountDownTask created");
+    this->setStatus(false);
     this->lcd = new LCD(0x27, 16, 2);
     this->resetCountDown(N3);
     this->init(1000);
@@ -48,7 +50,6 @@ void CountDown::startCountDown()
 void CountDown::printCountDown()
 {
     int count = getCountDown();
-    Serial.println("Countdown: " + String(count) + " seconds");
     lcd->write(("Countdown: " + String(count)).c_str(), 0, 0);
 }
 
@@ -56,6 +57,7 @@ void CountDown::endsCountDown()
 {
     if (getCountDown() <= 0)
     {
+        this->setStatus(true);
         this->isCompleted();
         this->printsEndsCountdown();
         this->resetCountDown(N3);
@@ -90,10 +92,19 @@ void CountDown::resumeCountDown()
     }
 }
 
+void CountDown::setStatus(bool value)
+{
+    this->status = value;
+}
+
+bool CountDown::getStatus()
+{
+    return this->status;
+}
+
 void CountDown::tick()
 {
     startCountDown();
     printCountDown();
     decreaseCountDown();
-    endsCountDown();
 }

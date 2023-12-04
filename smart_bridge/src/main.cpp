@@ -1,15 +1,16 @@
 #include "Arduino.h"
+#include "config/config.h"
 #include "kernel/Scheduler.h"
+#include "kernel/SerialReceiver.h"
 #include "tasks/BlinkTask.h"
 #include "tasks/CheckInTask.h"
-#include "config/config.h"
 #include "tasks/TransitTask.h"
 #include "tasks/WaitingTask.h"
 #include "tasks/WashingTask.h"
 #include "tasks/SleepingTask.h"
 #include "tasks/CheckOutTask.h"
 #include "tasks/CountDown.h"
-#include "kernel/SerialReceiver.h"
+#include "tasks/WaitForClickTask.h"
 // #include "tasks/ServoTestTask.h"
 
 Scheduler scheduler;
@@ -20,7 +21,7 @@ LCD *lcd;
 void setup()
 {
     Serial.begin(9600);
-    scheduler.init(50); // NOTE: Might be set higher to use less power, needs testing.
+    scheduler.init(100); // NOTE: Might be set higher to use less power, needs testing.
     /**CREATE TASKS**/
     // ServoTestTask *servoTask = new ServoTestTask();
     BlinkTask *blinkTask = new BlinkTask(L2_PIN);
@@ -30,22 +31,22 @@ void setup()
 
     CheckInTask *checkInTask = new CheckInTask();
     TransitTask *transitTask = new TransitTask(blinkTask);
-    //WashingTask *washingTask = new WashingTask(blinkTask, new CountDown(N3));
+    WaitForClickTask *waitForClickTask = new WaitForClickTask();
+    // WashingTask *washingTask = new WashingTask(blinkTask, new CountDown(N3));
     // TODO: CheckOutTask *checkOutTask = new CheckOutTask(blinkTaskForCheckOutTransit);
-    CountDown *countDown = new CountDown(N3); // NOTE: This is just a test.
-    countDown->tick();                        // NOTE: This is just a test.
+    // CountDown *countDown = new CountDown(N3); // NOTE: This is just a test.
+    // countDown->setActive(true);               // NOTE: This is just a test.
 
-    serialReceiver = new SerialReceiver(); //test test test test receiver
+    /// serialReceiver = new SerialReceiver(); //test test test test receiver
+
 
 
     /**DEPENDENCIES**/
-    //waitingTask->addDependency(sleepingTask);
-    
-    //checkInTask->addDependency(sleepingTask);
-    
-    //checkInTask->addDependency(sleepingTask);
-    //washingTask->addDependency(transitTask);
-   // checkOutTask->addDependency(washingTask);
+    // checkInTask->addDependency(waitingTask);
+    transitTask->addDependency(checkInTask);
+    waitForClickTask->addDependency(transitTask);
+    // washingTask->addDependency(transitTask);
+    // checkOutTask->addDependency(washingTask);
 
     /**ADD TASKS TO THE SCHEDULER**/
     // scheduler.addTask(servoTask);
@@ -57,11 +58,10 @@ void setup()
     checkInTask->addDependency(sleepingTask);
     scheduler.addTask(checkInTask);
 
-
-    //scheduler.addTask(checkInTask);
     //Serial.println("err:errore");
     scheduler.addTask(transitTask);
     scheduler.addTask(blinkTask);
+    scheduler.addTask(waitForClickTask);
 
     //scheduler.addTask(washingTask);
 
@@ -71,7 +71,7 @@ void setup()
 
 void loop()
 {
-    serialReceiver->readData(); //@EMANUELE this is a test to try the serialReceiver, it must go instantiate when the arduino is in error state
+    // serialReceiver->readData(); //@EMANUELE this is a test to try the serialReceiver, it must go instantiate when the arduino is in error state
                                 //read the class briefs
     scheduler.schedule();
 }

@@ -25,9 +25,16 @@ public:
      * @return false otherwise
      */
     bool readData();
+
+    /**
+     * @brief Simulate the read data from serial in the case of error state
+     * 
+     */
+    void simulateReadData();
 private:
     int status=ACTIVE;
     enum statuses{ACTIVE, INACTIVE};
+    bool simulateDataReceived = false;
 
 };
 

@@ -1,10 +1,12 @@
 #ifndef __CHECK_IN_TASK__
 #define __CHECK_IN_TASK__
 
+#include "config/config.h"
+
 #include "kernel/DependantTaskWithState.h"
 #include "components/api/Led.h"
-#include "config/config.h"
-#include <Servo.h>
+#include "components/api/LCD.h"
+#include "components/api/ServoImpl.h"
 
 /**
  * @class CheckInTask
@@ -19,8 +21,8 @@ public:
     {
         this->L1 = new Led(L1_PIN);
         this->L2 = new Led(L2_PIN);
-        this->gate = new Servo();
-        this->gate->attach(SERVO_PIN);
+        this->lcd = new LCD(0x27, 16, 2);
+        this->gate = new ServoImpl(SERVO_PIN);
         this->init();
         this->setState(STARTED);
         Serial.println("CheckInTask created");
@@ -35,7 +37,8 @@ private:
     };
     Led *L1;
     Led *L2;
-    Servo *gate;
+    LCD *lcd;
+    ServoImpl *gate;
 };
 
 #endif

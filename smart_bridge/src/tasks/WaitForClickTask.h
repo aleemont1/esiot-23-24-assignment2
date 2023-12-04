@@ -20,6 +20,7 @@ public:
     WaitForClickTask() : DependantTask()
     {
         this->start = new Button(BUTTON_PIN);
+        this->lcd = new LCD(0x27, 16, 2);
         this->init();
         Serial.println("WaitForClickTask created");
     };
@@ -28,5 +29,6 @@ public:
 
 private:
     Button *start;
+    LCD *lcd;
 };
 #endif

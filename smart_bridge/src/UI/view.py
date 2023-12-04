@@ -29,8 +29,8 @@ def configure_static_elements(root):
     title = tk.Label(root, text="Car Washing Dashboard", font=('Arial', 20), bg='lightblue', fg="green")
     title.grid(row=0, column=0)
     static_elements = [
-        ("Actual Wash Number: ", 1),
-        ("Info about Actual Washing", 3),
+        ("Current Washes Number: ", 1),
+        ("Info about Current Washing", 3),
         ("Current Status: ", 4),
         ("Current Temperature: ", 5),
         ("Message: ", 6)
@@ -42,7 +42,7 @@ def configure_static_elements(root):
 #these elements are modified by serialLine
 def configure_dynamic_elements(root):
     global wash_counter
-    global progress_status #status of the washing (wasing, checkin, checkout etc...)
+    global progress_status #status of the washing (washing, checkin, checkout etc...)
     global current_temperature
     global ui_message
 

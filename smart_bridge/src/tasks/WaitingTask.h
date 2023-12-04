@@ -1,16 +1,21 @@
 #ifndef __WAITING_TASK__
 #define __WAITING_TASK__
 
-#include "kernel/TaskWithState.h"
+#include "kernel/DependantTaskWithState.h"
 #include "components/api/Pir.h"
+#include "SleepingTask.h"
 #include "config/config.h"
 
-class WaitingTask : public TaskWithState
+class WaitingTask : public DependantTaskWithState
 {
 public:
-    WaitingTask() : TaskWithState()
+/**
+ * 
+ * 
+*/
+    WaitingTask(SleepingTask *SleepingTask) : DependantTaskWithState()
     {
-        this->pir=new Pir(PIR_PIN); //attached to the INTERRUPT_PIN
+        this->pir=new Pir(PIR_PIN); //attached to the INTERRUPT_PIN 2
         this->init();
         this->setState(STARTED);
         Serial.println("WaitingTask created");
@@ -22,7 +27,7 @@ private:
     {
         STARTED, //is just left ... so
         IN_SUSPENSION, //is going to go in sleep mode
-        FINSHED //is going to go in checkin state
+        FINISHED //is going to go in checkin state
     };
     Pir *pir;
 };

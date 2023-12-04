@@ -13,11 +13,13 @@ Pir::Pir(int pin) : pirDetectionStatus(OBJECT_NOT_DETECTED)
 
 bool Pir::checkDetectedStatus()
 {
+    updatePirState();
     return pirDetectionStatus == OBJECT_DETECTED;
 }
 
 bool Pir::checkNotDetectedStatus()
 {
+    updatePirState();
     return pirDetectionStatus == OBJECT_NOT_DETECTED;
 }
 

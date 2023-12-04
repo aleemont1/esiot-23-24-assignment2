@@ -6,6 +6,7 @@
 #include "tasks/TransitTask.h"
 #include "tasks/WaitingTask.h"
 #include "tasks/WashingTask.h"
+#include "tasks/SleepingTask.h"
 #include "tasks/CheckOutTask.h"
 #include "tasks/CountDown.h"
 #include "kernel/SerialReceiver.h"
@@ -14,6 +15,7 @@
 Scheduler scheduler;
 
 SerialReceiver *serialReceiver;
+LCD *lcd;
 
 void setup()
 {
@@ -23,8 +25,12 @@ void setup()
     // ServoTestTask *servoTask = new ServoTestTask();
     BlinkTask *blinkTask = new BlinkTask(L2_PIN);
     // TODO: BlinkTask *blinkTaskForCheckOutTransit = new BlinkTask(L2_PIN);
-    // SleepingTask *sleepingTask = new SleepingTask();
-    // WaitingTask *waitingTask = new WaitingTask();
+    SleepingTask *sleepingTask = new SleepingTask();
+    WaitingTask *waitingTask = new WaitingTask(sleepingTask);
+    lcd = new LCD(0x27, 16, 2);
+    lcd->write("ciao",0,1);
+
+
     CheckInTask *checkInTask = new CheckInTask();
     TransitTask *transitTask = new TransitTask(blinkTask);
     // WashingTask *washingTask = new WashingTask(blinkTask, new CountDown(N3));
@@ -36,8 +42,10 @@ void setup()
 
 
     /**DEPENDENCIES**/
+    //waitingTask->addDependency(sleepingTask);
     // checkInTask->addDependency(waitingTask);
-    transitTask->addDependency(checkInTask);
+    
+    checkInTask->addDependency(sleepingTask);
     // washingTask->addDependency(transitTask);
     // checkOutTask->addDependency(washingTask);
 
@@ -45,6 +53,11 @@ void setup()
     // scheduler.addTask(servoTask);
     // scheduler.addTask(countDown); // NOTE: This is just a test.
     // scheduler.addTask(waitingTask);
+
+    scheduler.addTask(sleepingTask);
+    //scheduler.addTask(waitingTask);
+
+
     scheduler.addTask(checkInTask);
     Serial.println("err:errore");
     scheduler.addTask(transitTask);

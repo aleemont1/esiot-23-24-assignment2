@@ -53,13 +53,15 @@ void WashingTask::printWashingCompletedMessage()
 void WashingTask::handleStartWashing()
 {
     this->blinkTask->setActive(true);
+    this->countDownTask->setActive(true);
+    this->temperatureTask->setActive(true);
     this->setState(STARTS_COUNTDOWN);
 }
 
 void WashingTask::handleStartsCountdown()
 {
-    this->countDownTask->tick();
-    this->temperatureTask->tick();
+    // this->countDownTask->tick();
+    // this->temperatureTask->tick();
     if (this->temperatureTask->checkForCriticalTemperature() == true && this->countDownTask->getStatus() == false)
     {
         this->setState(ERROR);

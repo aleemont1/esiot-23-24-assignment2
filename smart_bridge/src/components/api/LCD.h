@@ -14,6 +14,7 @@ public:
      */
   LCD(int address, int columns, int rows);
   void write(const char* string, int start_col, int start_rows);
+  void clear();
 protected:
   LiquidCrystal_I2C lcd;
 };

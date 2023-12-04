@@ -2,6 +2,7 @@
 
 CountDown::CountDown(int countDown) : Task()
 {
+    Serial.println("CountDownTask created");
     this->setStatus(false);
     this->lcd = new LCD(0x27, 16, 2);
     this->resetCountDown(N3);

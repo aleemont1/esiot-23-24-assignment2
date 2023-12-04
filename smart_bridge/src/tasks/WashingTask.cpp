@@ -78,6 +78,7 @@ void WashingTask::handleEndsCountdown()
     this->blinkTask->setActive(false);
     this->L3->switchOn();
     this->printWashingCompletedMessage();
+    this->temperatureTask->setCompleted();
     this->setCompleted();
 }
 

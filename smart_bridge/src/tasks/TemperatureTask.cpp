@@ -1,8 +1,8 @@
 #include "TemperatureTask.h"
 
 TemperatureTask::TemperatureTask()
-    : Task(),
-      voltageConversionFactor(100),
+    : TaskWithTimer(),
+      voltageConversionFactor(30),
       voltageOffset(0.5)
 {
     Serial.println("TemperatureTask created");
@@ -39,25 +39,21 @@ void TemperatureTask::setTemperature(int temperature)
 void TemperatureTask::printTemperature()
 {
     int temp = getTemperature();
-    lcd->write(("Temperature: " + String(temp) + "°C").c_str(), 0, 0);
+    lcd->write(("Temperature: " + String(temp) + (char)223 + "C").c_str(), 0, 0);
 }
 
 bool TemperatureTask::checkForCriticalTemperature()
 {
     if (temperature > MAXTEMP)
     {
-        if (timeExceededMaxTemp == 0)
-        {
-            timeExceededMaxTemp = millis();
-        }
-        else if (millis() - timeExceededMaxTemp >= N5 * 1000)
+        if (this->elapsedTime() >= N5 * 1000)
         {
             return true;
         }
     }
     else
     {
-        timeExceededMaxTemp = 0;
+        this->resetTime();
     }
     return false;
 }

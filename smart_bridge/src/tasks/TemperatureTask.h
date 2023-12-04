@@ -1,7 +1,7 @@
 #ifndef __TEMPERATURE_TASK__
 #define __TEMPERATURE_TASK__
 
-#include "kernel/Task.h"
+#include "kernel/TaskWithTimer.h"
 #include "Arduino.h"
 #include "config/config.h"
 #include "components/api/LCD.h"
@@ -14,7 +14,7 @@
  *
  * @extends Task
  */
-class TemperatureTask : public Task
+class TemperatureTask : public TaskWithTimer
 {
 public:
     /**

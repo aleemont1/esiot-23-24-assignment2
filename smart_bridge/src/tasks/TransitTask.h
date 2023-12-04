@@ -4,9 +4,10 @@
 #include "kernel/DependantTaskWithState.h"
 #include "BlinkTask.h"
 #include "config/config.h"
-#include "components/api/Sonar.h"
 #include "components/api/Led.h"
+#include "components/api/LCD.h"
 #include "components/api/ServoImpl.h"
+#include "components/api/Sonar.h"
 /**
  * @class TransitTask
  * @brief This task reads the distance of the car while entering the washing area.
@@ -26,6 +27,7 @@ public:
         Serial.println("TransitTask created");
         this->sonar = new Sonar(SONAR_TRIG_PIN, SONAR_ECHO_PIN, SONAR_MAX_TIME);
         this->L2 = new Led(L2_PIN);
+        this->lcd = new LCD(0x27, 16, 2);
         // TODO: FIX SERVO.
         this->gate = new ServoImpl(SERVO_PIN);
         this->blinkTask = blinkTask;
@@ -44,6 +46,7 @@ private:
         CHECKING_DISTANCE
     };
     Led *L2;
+    LCD *lcd;
     Sonar *sonar;
     ServoImpl *gate;
     float distance;

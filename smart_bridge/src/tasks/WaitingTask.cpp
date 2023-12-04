@@ -9,7 +9,8 @@ void WaitingTask::tick()
         {
             switch (this->getState())
             {
-                
+                case STARTED:
+                    Serial.println("sono qui in waiting");
             }
             
         }

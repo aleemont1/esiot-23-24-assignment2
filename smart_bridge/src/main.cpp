@@ -26,14 +26,11 @@ void setup()
     BlinkTask *blinkTask = new BlinkTask(L2_PIN);
     // TODO: BlinkTask *blinkTaskForCheckOutTransit = new BlinkTask(L2_PIN);
     SleepingTask *sleepingTask = new SleepingTask();
-    WaitingTask *waitingTask = new WaitingTask(sleepingTask);
-    lcd = new LCD(0x27, 16, 2);
-    lcd->write("ciao",0,1);
 
 
     CheckInTask *checkInTask = new CheckInTask();
     TransitTask *transitTask = new TransitTask(blinkTask);
-    // WashingTask *washingTask = new WashingTask(blinkTask, new CountDown(N3));
+    //WashingTask *washingTask = new WashingTask(blinkTask, new CountDown(N3));
     // TODO: CheckOutTask *checkOutTask = new CheckOutTask(blinkTaskForCheckOutTransit);
     CountDown *countDown = new CountDown(N3); // NOTE: This is just a test.
     countDown->tick();                        // NOTE: This is just a test.
@@ -43,11 +40,12 @@ void setup()
 
     /**DEPENDENCIES**/
     //waitingTask->addDependency(sleepingTask);
-    // checkInTask->addDependency(waitingTask);
     
-    checkInTask->addDependency(sleepingTask);
-    // washingTask->addDependency(transitTask);
-    // checkOutTask->addDependency(washingTask);
+    //checkInTask->addDependency(sleepingTask);
+    
+    //checkInTask->addDependency(sleepingTask);
+    //washingTask->addDependency(transitTask);
+   // checkOutTask->addDependency(washingTask);
 
     /**ADD TASKS TO THE SCHEDULER**/
     // scheduler.addTask(servoTask);
@@ -55,15 +53,17 @@ void setup()
     // scheduler.addTask(waitingTask);
 
     scheduler.addTask(sleepingTask);
-    //scheduler.addTask(waitingTask);
-
-
+    
+    checkInTask->addDependency(sleepingTask);
     scheduler.addTask(checkInTask);
-    Serial.println("err:errore");
+
+
+    //scheduler.addTask(checkInTask);
+    //Serial.println("err:errore");
     scheduler.addTask(transitTask);
     scheduler.addTask(blinkTask);
 
-    // scheduler.addTask(washingTask);
+    //scheduler.addTask(washingTask);
 
     // TODO: scheduler.addTask(checkOutTask);
     // TODO: scheduler.addTask(blinkTaskForCheckOutTransit);

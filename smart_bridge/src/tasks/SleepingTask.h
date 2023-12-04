@@ -5,6 +5,7 @@
 
 #include "config/config.h"
 #include "components/api/Pir.h"
+#include "components/api/LCD.h"
 #include "kernel/DependantTaskWithState.h"
 #include "avr/interrupt.h"
 #include "avr/sleep.h"
@@ -23,22 +24,24 @@ public:
     {
         Serial.println("SleepingTask created");
         this->pir = new Pir(PIR_PIN);
+        this->lcd=new LCD(0x27, 16,2);
         this->init();
-        this->setState(WAITING_FOR_SOMEONE);
+        this->setActive(true);
+        this->setState(STARTING);
     };
     void tick() override;
+    void wakeUp();
+    void goInSleep();
 
 private:
     enum state
     {
-        WAITING_FOR_SOMEONE,
-        GO_IN_SLEEP,
-        WAKE_UP,
-        OBJECT_DETECTED_STATUS,
-        OBJECT_NOT_DETECTED_STATUS,
-        SLEEP
+        STARTING,
+        ALIVE,
+        OBJECT_DETECTED
     };
     Pir *pir;
+    LCD *lcd;
 };
 
 #endif

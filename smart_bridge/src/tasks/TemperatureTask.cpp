@@ -1,7 +1,7 @@
 #include "TemperatureTask.h"
 
 TemperatureTask::TemperatureTask()
-    : Task(),
+    : TaskWithTimer(),
       voltageConversionFactor(30),
       voltageOffset(0.5)
 {
@@ -46,18 +46,14 @@ bool TemperatureTask::checkForCriticalTemperature()
 {
     if (temperature > MAXTEMP)
     {
-        if (timeExceededMaxTemp == 0)
-        {
-            timeExceededMaxTemp = millis();
-        }
-        else if (millis() - timeExceededMaxTemp >= N5 * 1000)
+        if (this->elapsedTime() >= N5 * 1000)
         {
             return true;
         }
     }
     else
     {
-        timeExceededMaxTemp = 0;
+        this->resetTime();
     }
     return false;
 }

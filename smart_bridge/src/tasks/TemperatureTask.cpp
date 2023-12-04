@@ -2,7 +2,7 @@
 
 TemperatureTask::TemperatureTask()
     : Task(),
-      voltageConversionFactor(100),
+      voltageConversionFactor(30),
       voltageOffset(0.5)
 {
     Serial.println("TemperatureTask created");
@@ -39,7 +39,7 @@ void TemperatureTask::setTemperature(int temperature)
 void TemperatureTask::printTemperature()
 {
     int temp = getTemperature();
-    lcd->write(("Temperature: " + String(temp) + "°C").c_str(), 0, 0);
+    lcd->write(("Temperature: " + String(temp) + (char)223 + "C").c_str(), 0, 0);
 }
 
 bool TemperatureTask::checkForCriticalTemperature()

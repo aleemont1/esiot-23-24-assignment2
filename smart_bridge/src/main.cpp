@@ -23,8 +23,7 @@ SerialReceiver *serialReceiver;
 
 void setup()
 {
-    
-    // Serial.begin(9600);
+    Serial.begin(9600);
     scheduler.init(50); // NOTE: Might be set higher to use less power, needs testing.
 
     /**CREATE TASKS**/
@@ -38,7 +37,7 @@ void setup()
     WashingTask washingTask = WashingTask(&blinkTask, nullptr, &temperatureTask);
     CheckOutTask checkOutTask = CheckOutTask();
     ExitTransitTask exitTransitTask = ExitTransitTask();
-    // /**DEPENDENCIES**/
+    /**DEPENDENCIES**/
     checkInTask.addDependency(&sleepingTask);
     transitTask.addDependency(&checkInTask);
     waitForClickTask.addDependency(&transitTask);
@@ -46,7 +45,7 @@ void setup()
     checkOutTask.addDependency(&washingTask);
     exitTransitTask.addDependency(&checkOutTask);
 
-    // /**ADD TASKS TO THE SCHEDULER**/
+    /**ADD TASKS TO THE SCHEDULER**/
     scheduler.addTask(&sleepingTask);
     scheduler.addTask(&checkInTask);
     scheduler.addTask(&transitTask);

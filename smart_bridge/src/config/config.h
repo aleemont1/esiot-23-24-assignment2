@@ -31,13 +31,13 @@
 // SERVO
 #define SERVO_PIN 9
 
-#define N1 2           // Time for the gate to open after car presence (in seconds)
+#define N1 2          // Time for the gate to open after car presence (in seconds)
 #define MINDIST 5.0f  // Minimum distance for car fully entering (in cm)
 #define N2 5          // Time to consider car fully entered (in seconds)
-#define N3 15          // Time for the washing process (in seconds)
-#define MAXDIST 30     // Maximum distance to consider car leaving (in cm)
-#define N4_FOR_DIST 10 // Time to consider car fully left (in seconds)
-#define N5 5           // Time to check for critical temperature (in seconds) then it goes in error state
-#define MAXTEMP 30     // Maximum temperature before maintenance required (in Celsius)
+#define N3 15         // Time for the washing process (in seconds)
+#define MAXDIST 5.0f  // Maximum distance to consider car leaving (in cm)
+#define N4_FOR_DIST 3 // Time to consider car fully left (in seconds)
+#define N5 5          // Time to check for critical temperature (in seconds) then it goes in error state
+#define MAXTEMP 30    // Maximum temperature before maintenance required (in Celsius)
 
 #endif

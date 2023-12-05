@@ -16,8 +16,8 @@ WashingTask::WashingTask(BlinkTask *blinkTask,
     this->blinkTask->setActive(false);
     this->countDownTask = countDownTask;
     this->temperatureTask = temperatureTask;
-    this->countDownTask->setActive(false);
-    this->temperatureTask->setActive(false);
+    // this->countDownTask->setActive(false); TODO: uncomment if you want to test
+    // this->temperatureTask->setActive(false); TODO: uncomment if you want to test
     this->init();
     this->setState(START_WASHING);
 }

@@ -5,7 +5,7 @@ WashingTask::WashingTask(BlinkTask *blinkTask,
                          TemperatureTask *temperatureTask)
     : DependantTaskWithState()
 {
-    Serial.println("WashingTask created");
+    Serial.println(F("WashingTask created"));
     this->L2 = new Led(L2_PIN);
     this->L3 = new Led(L3_PIN);
     this->tempSensor = new Temp(TMP_PIN);
@@ -13,7 +13,7 @@ WashingTask::WashingTask(BlinkTask *blinkTask,
     this->gate = new ServoImpl(SERVO_PIN);
     this->blinkTask = blinkTask;
     this->blinkTask->init(500);        // Blink every 500 ms the red led
-    this->blinkTask->setActive(false); // TODO: Check if this is necessary
+    this->blinkTask->setActive(false);
     this->countDownTask = countDownTask;
     this->temperatureTask = temperatureTask;
     this->init(1000);

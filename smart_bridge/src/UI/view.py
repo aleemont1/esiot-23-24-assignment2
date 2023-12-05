@@ -17,8 +17,8 @@ message_type:  err=error, out=output, tmp=temperature, sts=status, cnt=counter
 
 def create_main_window():
     root = tk.Tk()
-    root.title("Car Washing Dashboard")
-    root.geometry("600x600")
+    root.title("Car Washing Dashboard"))
+    root.geometry("600x600"))
     root.configure(bg='lightblue')
     root.resizable(True, True)
     return root
@@ -26,7 +26,7 @@ def create_main_window():
 
 #these elements are not modified by serialLine
 def configure_static_elements(root):
-    title = tk.Label(root, text="Car Washing Dashboard", font=('Arial', 20), bg='lightblue', fg="green")
+    title = tk.Label(root, text="Car Washing Dashboard", font=('Arial', 20), bg='lightblue', fg="green"))
     title.grid(row=0, column=0)
     static_elements = [
         ("Current Washes Number: ", 1),
@@ -37,7 +37,7 @@ def configure_static_elements(root):
     ]
     for text, row in static_elements:
         label = tk.Label(root, text=text, font=('Arial', 14), bg='lightblue')
-        label.grid(row=row, column=0, pady=20,padx=5, sticky="w")
+        label.grid(row=row, column=0, pady=20,padx=5, sticky="w"))
 
 #these elements are modified by serialLine
 def configure_dynamic_elements(root):
@@ -52,10 +52,10 @@ def configure_dynamic_elements(root):
     ui_message=tk.StringVar()
     
 
-    wash_counter.set("counter")
-    progress_status.set("washing state")
-    current_temperature.set("20")
-    ui_message.set("message")
+    wash_counter.set("counter"))
+    progress_status.set("washing state"))
+    current_temperature.set("20"))
+    ui_message.set("message"))
 
     dynamic_elements = [
         (tk.Label, wash_counter, 1),
@@ -66,7 +66,7 @@ def configure_dynamic_elements(root):
 
     for element_type, text_var, row in dynamic_elements:
         element = element_type(root, textvariable=text_var, font=('Arial', 14), bg='lightblue')
-        element.grid(row=row, column=1, sticky="w")
+        element.grid(row=row, column=1, sticky="w"))
 
 
 def configure_button(root):
@@ -79,7 +79,7 @@ def hide_button():
     button.grid_remove()
 
 def show_button(): #show button when an error occured
-    button.grid(row=7, column=1, pady=10, columnspan=2, sticky="n")
+    button.grid(row=7, column=1, pady=10, columnspan=2, sticky="n"))
 
 def maintenance_done_click():
     hide_button()
@@ -105,13 +105,13 @@ def check_packet(decoded_packet):
     print(decoded_packet)
 
     if ":" in decoded_packet:
-        splitted_message=decoded_packet.split(":")
+        splitted_message=decoded_packet.split(":"))
         message_type=splitted_message[0]
         message=splitted_message[1]
 
         if message_type=="err":
             show_button()
-            ui_message.set("Errore nella macchina")
+            ui_message.set("Errore nella macchina"))
         elif message_type=="sts": #washing state
             progress_status.set(message)
         elif message_type=="cnt": #wash_counter
@@ -129,9 +129,9 @@ Send a packet to arduino formatted in a certain way
 def send_packet(packet):
     try:
         serialInst.write(packet.encode('utf-8'))
-        print(f"GUI: Pacchetto inviato con successo: {packet}")
+        print(f"GUI: Pacchetto inviato con successo: {packet}"))
     except Exception as e:
-        print(f"Errore durante l'invio del pacchetto: {e}")
+        print(f"Errore durante l'invio del pacchetto: {e}"))
 
 
 def update_serial():
@@ -143,7 +143,7 @@ def update_serial():
 
 def start_serial():
     global serialInst
-    serialInst = serial.Serial()
+    serialInst = // SerialSerial()
     serialInst.baudrate = 9600
     serialInst.port = 'COM3' #COM3 depends on the port where Arduino is connected
     serialInst.open()

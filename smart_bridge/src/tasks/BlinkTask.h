@@ -20,7 +20,7 @@ public:
    */
   BlinkTask(int pin, int period) : TaskWithState()
   {
-    Serial.println("BlinkTask created");
+    Serial.println(F("BlinkTask created"));
     this->pin = pin;
     this->init(period);
   }
@@ -31,7 +31,7 @@ public:
    */
   BlinkTask(int pin) : TaskWithState()
   {
-    Serial.println("BlinkTask created");
+    Serial.println(F("BlinkTask created"));
     this->pin = pin;
     if (this->isActive())
     {

@@ -24,7 +24,7 @@ public:
      */
     TransitTask(BlinkTask *blinkTask) : DependantTaskWithState()
     {
-        Serial.println("TransitTask created");
+        Serial.println(F("TransitTask created"));
         this->sonar = new Sonar(SONAR_TRIG_PIN, SONAR_ECHO_PIN, SONAR_MAX_TIME);
         this->L2 = new Led(L2_PIN);
         this->lcd = new LCD(0x27, 16, 2);

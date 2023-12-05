@@ -22,7 +22,7 @@ class SleepingTask : public TaskWithState
 public:
     SleepingTask() : TaskWithState()
     {
-        Serial.println("SleepingTask created");
+        Serial.println(F("SleepingTask created"));
         this->pir = new Pir(PIR_PIN);
         this->lcd=new LCD(0x27, 16,2);
         this->init();

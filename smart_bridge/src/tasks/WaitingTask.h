@@ -18,7 +18,7 @@ public:
         this->pir=new Pir(PIR_PIN); //attached to the INTERRUPT_PIN 2
         this->init();
         this->setState(STARTED);
-        Serial.println("WaitingTask created");
+        Serial.println(F("WaitingTask created"));
     };
     void tick() override;
 

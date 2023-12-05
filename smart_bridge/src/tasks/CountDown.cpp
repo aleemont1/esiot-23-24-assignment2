@@ -2,7 +2,7 @@
 
 CountDown::CountDown(int countDown) : Task()
 {
-    Serial.println("CountDownTask created");
+    Serial.println(F("CountDownTask created"));
     this->setStatus(false);
     this->lcd = new LCD(0x27, 16, 2);
     this->resetCountDown(N3);
@@ -61,14 +61,14 @@ void CountDown::endsCountDown()
         this->isCompleted();
         this->printsEndsCountdown();
         this->resetCountDown(N3);
-        Serial.println("CountDown::Countdown resetted");
+        Serial.println(F("CountDown::Countdown resetted"));
         this->setCompleted();
     }
 }
 
 void CountDown::printsEndsCountdown()
 {
-    Serial.println("CountDown::Countdown ended!");
+    Serial.println(F("CountDown::Countdown ended!"));
 }
 
 bool CountDown::isCountDownActive()

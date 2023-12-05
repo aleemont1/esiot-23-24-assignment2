@@ -12,7 +12,7 @@
 //     {
 //         // this->servo = new Servo();
 //         this->servo.detach();
-//         Serial.println(F("Servo::attach" + String(this->servo.attach(SERVO_PIN)));
+//         // Serial.println(F("Servo::attach" + String(this->servo.attach(SERVO_PIN)));
 //         this->init(1000); // Periodic task, executed every 1000ms
 //         this->setActive(true);
 //         this->setState(OPEN);

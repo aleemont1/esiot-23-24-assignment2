@@ -18,7 +18,7 @@ void SleepingTask::tick()
 
         case ALIVE:
             if (pir->checkDetectedStatus()) {
-                Serial.println(F("OBJECT revealed"));
+                // Serial.println(F("OBJECT revealed"));
                 this->setState(OBJECT_DETECTED);
             }
             break;

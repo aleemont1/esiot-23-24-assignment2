@@ -15,7 +15,7 @@ void Scheduler::addTask(Task *task)
   {
     tasks[numTasks++] = task;
 #ifdef __DEBUG
-    Serial.println(F("tasks[" + String(numTasks - 1) + "]: [" + String(reinterpret_cast<uintptr_t>(tasks[numTasks - 1])) + "]"));
+    // Serial.println(F("tasks[" + String(numTasks - 1) + "]: [" + String(reinterpret_cast<uintptr_t>(tasks[numTasks - 1])) + "]"));
 #endif
   }
 }
@@ -35,16 +35,16 @@ void Scheduler::schedule()
           if (tasks[i]->updateAndCheckTime(schedulerPeriod)) // Check if it's time to execute
           {
 #ifdef __DEBUG
-            Serial.println(F("Scheduler::tasks[" + String(i) + "]: " + String(reinterpret_cast<uintptr_t>(tasks[i])) + " tick"));
+            // Serial.println(F("Scheduler::tasks[" + String(i) + "]: " + String(reinterpret_cast<uintptr_t>(tasks[i])) + " tick"));
 #endif
             tasks[i]->tick(); // Execute task
-            // Serial.println(F("Scheduler::numTasks: " + numTasks);
+            // // Serial.println(F("Scheduler::numTasks: " + numTasks);
           }
         }
         else // Task is aperiodic
         {
 #ifdef __DEBUG
-          Serial.println(F("Scheduler::tasks[" + String(i) + "]: " + String(reinterpret_cast<uintptr_t>(tasks[i])) + " tick"));
+          // Serial.println(F("Scheduler::tasks[" + String(i) + "]: " + String(reinterpret_cast<uintptr_t>(tasks[i])) + " tick"));
 #endif
           tasks[i]->tick(); // Execute task without checking time
         }

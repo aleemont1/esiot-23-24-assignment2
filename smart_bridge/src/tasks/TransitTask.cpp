@@ -14,15 +14,15 @@ void TransitTask::tick()
                 this->L2->switchOn();
                 this->distance = sonar->detectDistance();
 #ifdef __LOG
-                Serial.println(F("TransitTask::Distance: "));
-                Serial.print(String(this->distance));
+                // Serial.println(F("TransitTask::Distance: "));
+                // Serial.print(String(this->distance));
 #endif
                 if (this->distance < MINDIST)
                 {
                     this->resetTime();
                     this->setState(CHECKING_DISTANCE);
 #ifdef __LOG
-                    Serial.println(F("TransitTask::Checking distance"));
+                    // Serial.println(F("TransitTask::Checking distance"));
 #endif
                 }
                 break;
@@ -34,22 +34,22 @@ void TransitTask::tick()
                 }
                 this->distance = sonar->detectDistance();
 #ifdef __LOG
-                Serial.print(F("TransitTask::Distance: "));
-                Serial.println(String(this->distance));
+                // Serial.print(F("TransitTask::Distance: "));
+                // Serial.println(String(this->distance));
 #endif
                 if (this->distance < MINDIST)
                 {
 #ifdef __DEBUG
-                    Serial.print(F("TransitTask::Elapsed: "));
-                    Serial.println(String(this->elapsedTime()));
+                    // Serial.print(F("TransitTask::Elapsed: "));
+                    // Serial.println(String(this->elapsedTime()));
 #endif
                     if (this->elapsedTime() >= (N2 * 1000))
                     {
 #ifdef __LOG
-                        Serial.println(F("TransitTask::Distance: "));
-                        Serial.println(String(this->distance));
-                        Serial.println(F("TransitTask::Car entered"));
-                        Serial.println(F("TransitTask::Closing gate"));
+                        // Serial.println(F("TransitTask::Distance: "));
+                        // Serial.println(String(this->distance));
+                        // Serial.println(F("TransitTask::Car entered"));
+                        // Serial.println(F("TransitTask::Closing gate"));
 #endif
                         this->gate->write(0);
                         if (this->blinkTask->isActive())
@@ -63,7 +63,7 @@ void TransitTask::tick()
                 else
                 {
 #ifdef __LOG
-                    Serial.println(F("TransitTask::Reading distance"));
+                    // Serial.println(F("TransitTask::Reading distance"));
 #endif
                     if (this->blinkTask->isActive())
                     {
@@ -74,7 +74,7 @@ void TransitTask::tick()
                 }
                 break;
             default:
-                Serial.println(F("TransitTask::Invalid state"));
+                // Serial.println(F("TransitTask::Invalid state"));
                 break;
             }
         }

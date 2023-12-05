@@ -5,7 +5,7 @@ WashingTask::WashingTask(BlinkTask *blinkTask,
                          TemperatureTask *temperatureTask)
     : DependantTaskWithState()
 {
-    Serial.println(F("WashingTask created"));
+    // Serial.println(F("WashingTask created"));
     this->L2 = new Led(L2_PIN);
     this->L3 = new Led(L3_PIN);
     this->tempSensor = new Temp(TMP_PIN);

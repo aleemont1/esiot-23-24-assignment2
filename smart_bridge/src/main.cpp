@@ -1,9 +1,10 @@
-#include "Arduino.h"
+// #include "Arduino.h"
 
 #include "config/config.h"
 
 #include "kernel/Scheduler.h"
-#include "kernel/SerialReceiver.h"
+
+#include "components/api/LCD.h"
 
 #include "tasks/BlinkTask.h"
 #include "tasks/CountDown.h"
@@ -23,7 +24,7 @@ SerialReceiver *serialReceiver;
 void setup()
 {
     
-    Serial.begin(9600);
+    // Serial.begin(9600);
     scheduler.init(50); // NOTE: Might be set higher to use less power, needs testing.
 
     /**CREATE TASKS**/
@@ -34,10 +35,9 @@ void setup()
     CheckInTask checkInTask = CheckInTask();
     TransitTask transitTask = TransitTask(&blinkTask);
     WaitForClickTask waitForClickTask = WaitForClickTask();
-    WashingTask washingTask = WashingTask(&blinkTask, &countDownTask, &temperatureTask);
+    WashingTask washingTask = WashingTask(&blinkTask, nullptr, &temperatureTask);
     CheckOutTask checkOutTask = CheckOutTask();
     ExitTransitTask exitTransitTask = ExitTransitTask();
-
     // /**DEPENDENCIES**/
     checkInTask.addDependency(&sleepingTask);
     transitTask.addDependency(&checkInTask);

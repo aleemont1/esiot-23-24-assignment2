@@ -11,7 +11,7 @@ bool SerialReceiver::readData() {
     //     String data = // SerialreadString(); 
     //     data.trim();
     //     if (data=="mnt:done")) {
-    //         Serial.println(F("Arduino received message: " + data);
+    //         // Serial.println(F("Arduino received message: " + data);
     //         return true;
     //     }
     // }
@@ -20,5 +20,5 @@ bool SerialReceiver::readData() {
 
 void SerialReceiver::simulateReadData() {
     this->simulateDataReceived = true;
-    Serial.println(F("Arduino received message: simulates mnt:done"));
+    // Serial.println(F("Arduino received message: simulates mnt:done"));
 }

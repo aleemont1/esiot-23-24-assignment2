@@ -11,7 +11,7 @@ void WaitingTask::tick()
             {
                 case STARTED:
                     break;
-                    Serial.println(F("sono qui in waiting"));
+                    // Serial.println(F("sono qui in waiting"));
             }
             
         }

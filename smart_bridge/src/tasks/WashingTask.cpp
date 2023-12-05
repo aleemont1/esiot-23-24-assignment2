@@ -12,8 +12,8 @@ WashingTask::WashingTask(BlinkTask *blinkTask,
     this->lcd = new LCD(0x27, 16, 2);
     this->gate = new ServoImpl(SERVO_PIN);
     this->blinkTask = blinkTask;
-    this->blinkTask->init(500);        // Blink every 500 ms the red led
-    this->blinkTask->setActive(false); // TODO: Check if this is necessary
+    this->blinkTask->init(500);
+    this->blinkTask->setActive(false);
     this->countDownTask = countDownTask;
     this->temperatureTask = temperatureTask;
     this->countDownTask->setActive(false);
@@ -67,8 +67,6 @@ void WashingTask::handleStartWashing()
 
 void WashingTask::handleStartsCountdown()
 {
-    // this->countDownTask->tick();
-    // this->temperatureTask->tick();
     if (this->elapsedTime() >= checkInterval)
     {
         this->resetTime();

@@ -32,6 +32,7 @@ public:
      */
     void tick() override;
 
+private:
     /**
      * @brief Handles the turning on of the L3 LED.
      *
@@ -46,7 +47,6 @@ public:
      */
     void handleOpensGate();
 
-private:
     /**
      * @brief Enum for the possible states of the task.
      *

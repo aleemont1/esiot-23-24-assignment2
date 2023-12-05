@@ -29,6 +29,8 @@ void CheckOutTask::tick()
             }
         }
     }
+    else
+        Serial.println("CheckOutTask::tick()::getDependency(0) is nullptr");
 }
 
 void CheckOutTask::handleTurnOnL3()

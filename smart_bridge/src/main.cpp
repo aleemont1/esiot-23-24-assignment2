@@ -29,38 +29,33 @@ void setup()
     scheduler.init(50); // NOTE: Might be set higher to use less power, needs testing.
 
     /**CREATE TASKS**/
-    BlinkTask *blinkTaskTransit = new BlinkTask(L2_PIN);
-    BlinkTask *blinkTaskWashing = new BlinkTask(L2_PIN);
-    // CountDown *countDownTask = new CountDown(N3);
-    TemperatureTask *temperatureTask = new TemperatureTask();
-    // SleepingTask *sleepingTask = new SleepingTask();
     CheckInTask *checkInTask = new CheckInTask();
-    TransitTask *transitTask = new TransitTask(blinkTaskTransit);
+    BlinkTask *blinkTask = new BlinkTask(L2_PIN);
+    TransitTask *transitTask = new TransitTask(blinkTask);
     WaitForClickTask *waitForClickTask = new WaitForClickTask();
-    // WashingTask *washingTask = new WashingTask(blinkTaskTransit, nullptr, temperatureTask);
-    // CheckOutTask *checkOutTask = new CheckOutTask();
-    // ExitTransitTask *exitTransitTask = new ExitTransitTask();
+    CountDown *countDownTask = new CountDown(N3);
+    TemperatureTask *temperatureTask = new TemperatureTask();
+    WashingTask *washingTask = new WashingTask(blinkTask, countDownTask, temperatureTask);
+    CheckOutTask *checkOutTask = new CheckOutTask();
+    ExitTransitTask *exitTransitTask = new ExitTransitTask();
 
     /**DEPENDENCIES**/
-    // checkInTask->addDependency(sleepingTask);
     transitTask->addDependency(checkInTask);
     waitForClickTask->addDependency(transitTask);
-    //washingTask->addDependency(waitForClickTask);
-    // checkOutTask->addDependency(washingTask);
-    // exitTransitTask->addDependency(checkOutTask);
+    washingTask->addDependency(waitForClickTask);
+    checkOutTask->addDependency(washingTask);
+    exitTransitTask->addDependency(checkOutTask);
 
     /**ADD TASKS TO THE SCHEDULER**/
-    // scheduler.addTask(sleepingTask);
     scheduler.addTask(checkInTask);
     scheduler.addTask(transitTask);
-    scheduler.addTask(blinkTaskTransit);
-    scheduler.addTask(blinkTaskWashing);
-    // scheduler.addTask(countDownTask);
-    scheduler.addTask(temperatureTask);
+    scheduler.addTask(blinkTask);
     scheduler.addTask(waitForClickTask);
-    // scheduler.addTask(washingTask);
-    // scheduler.addTask(checkOutTask);
-    // scheduler.addTask(exitTransitTask);
+    scheduler.addTask(washingTask);
+    scheduler.addTask(countDownTask);
+    scheduler.addTask(temperatureTask);
+    scheduler.addTask(checkOutTask);
+    scheduler.addTask(exitTransitTask);
 }
 
 void loop()

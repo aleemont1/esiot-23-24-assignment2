@@ -39,6 +39,8 @@ void ExitTransitTask::tick()
             }
         }
     }
+    else
+        Serial.println("ExitTransitTask::tick()::getDependency(0) is nullptr");
 }
 
 void ExitTransitTask::handleReadingDistance()

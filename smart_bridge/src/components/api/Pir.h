@@ -76,6 +76,8 @@ private:
      * @brief The current detection status of the PIR sensor (true if movement is detected, false otherwise).
      */
     bool pirDetectionStatus;
+
+
 };
 
 #endif // __PIR__

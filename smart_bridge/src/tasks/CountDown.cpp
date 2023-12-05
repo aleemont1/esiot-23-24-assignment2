@@ -50,7 +50,9 @@ void CountDown::startCountDown()
 void CountDown::printCountDown()
 {
     int count = getCountDown();
-    lcd->write(("Countdown: " + String(count)).c_str(), 0, 0);
+    char buffer[3];
+    sprintf(buffer, "%02d", count);
+    lcd->write(("Countdown: " + String(buffer)).c_str(), 0, 0);
 }
 
 void CountDown::endsCountDown()

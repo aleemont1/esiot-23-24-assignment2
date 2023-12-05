@@ -7,6 +7,7 @@ CountDown::CountDown(int countDown) : Task()
     this->lcd = new LCD(0x27, 16, 2);
     this->resetCountDown(N3);
     this->init(1000);
+    this->setActive(false);
 }
 
 int CountDown::getCountDown()

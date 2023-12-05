@@ -9,7 +9,7 @@ ExitTransitTask::ExitTransitTask()
     this->sonar = new Sonar(SONAR_TRIG_PIN, SONAR_ECHO_PIN, SONAR_MAX_TIME);
     this->L3 = new Led(L3_PIN);
     this->gate = new ServoImpl(SERVO_PIN);
-    this->init(1000);
+    this->init();
     this->setState(READING_DISTANCE);
 };
 
@@ -54,15 +54,13 @@ void ExitTransitTask::handleCheckingDistance()
 {
     if (this->distance > MAXDIST)
     {
-        if (timeInExit == 0)
-        {
-            timeInExit = millis();
-        }
-        else if (millis() - timeInExit >= N4_FOR_DIST * 1000)
+        if (this->elapsedTime() >= N4_FOR_DIST * 1000)
         {
             this->setState(CLOSES_GATE);
         }
     }
+    else
+        this->resetTime();
 }
 
 void ExitTransitTask::handleClosesGate()

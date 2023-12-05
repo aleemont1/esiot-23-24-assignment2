@@ -6,6 +6,7 @@
 #include "components/api/Sonar.h"
 #include "components/api/Led.h"
 #include "components/api/ServoImpl.h"
+#include "components/api/LCD.h"
 
 /**
  * @brief Manages the process of a car exiting the transit area.
@@ -63,6 +64,7 @@ private:
     float distance;                ///< The current distance read from the sonar sensor.
     const int GATE_OPEN_POSITION;  ///< The position of the gate when it is open.
     const int GATE_CLOSE_POSITION; ///< The position of the gate when it is closed.
+    LCD *lcd;                      ///< Pointer to the LCD object.
 };
 
 #endif // __CHECK_OUT_TASK__

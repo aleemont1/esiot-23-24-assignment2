@@ -9,6 +9,7 @@ TemperatureTask::TemperatureTask()
     this->lcd = new LCD(0x27, 16, 2);
     this->setTemperature(this->getTemperature());
     this->init(1000);
+    this->setActive(false);
 }
 
 float TemperatureTask::readVoltage()

@@ -12,11 +12,7 @@ WashingTask::WashingTask(BlinkTask *blinkTask,
     this->lcd = new LCD(0x27, 16, 2);
     this->gate = new ServoImpl(SERVO_PIN);
     this->blinkTask = blinkTask;
-<<<<<<< HEAD
-    this->blinkTask->init(500);        // Blink every 500 ms the red led
-=======
     this->blinkTask->init(500);
->>>>>>> ae7961de6fe356cd0044a8ce636b972a24eee768
     this->blinkTask->setActive(false);
     this->countDownTask = countDownTask;
     this->temperatureTask = temperatureTask;
@@ -100,7 +96,6 @@ void WashingTask::handleError()
     this->countDownTask->pauseCountDown();
     this->temperatureTask->criticalTemperatureReachedMessage();
     this->temperatureTask->temperatureMaintenanceMessage();
-    this->serialReceiver->simulateReadData(); // TODO: remove, but now simulate receiving "mnt:done"
     if (serialReceiver->readData() == true)
     {
         this->countDownTask->resumeCountDown();

@@ -39,6 +39,7 @@ public:
      */
     void tick() override;
 
+private:
     /**
      * @brief Handles the start of the washing process.
      *
@@ -73,7 +74,6 @@ public:
      */
     void printWashingCompletedMessage();
 
-private:
     /**
      * @brief Enum for the possible states of the task.
      *

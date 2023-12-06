@@ -12,37 +12,48 @@ WashingTask::WashingTask(BlinkTask *blinkTask,
     this->lcd = new LCD(0x27, 16, 2);
     this->gate = new ServoImpl(SERVO_PIN);
     this->blinkTask = blinkTask;
+<<<<<<< HEAD
     this->blinkTask->init(500);        // Blink every 500 ms the red led
+=======
+    this->blinkTask->init(500);
+>>>>>>> ae7961de6fe356cd0044a8ce636b972a24eee768
     this->blinkTask->setActive(false);
     this->countDownTask = countDownTask;
     this->temperatureTask = temperatureTask;
-    this->init(1000);
+    // this->countDownTask->setActive(false); TODO: uncomment if you want to test
+    // this->temperatureTask->setActive(false); TODO: uncomment if you want to test
+    this->init();
     this->setState(START_WASHING);
 }
 
 void WashingTask::tick()
 {
-    if (this->DependantTask::getDependency(0)->isCompleted())
+    if (this->getDependency(0) != nullptr)
     {
-        switch (this->getState())
+        if (this->DependantTask::getDependency(0)->isCompleted())
         {
-        case START_WASHING:
-            handleStartWashing();
-            break;
+            switch (this->getState())
+            {
+            case START_WASHING:
+                handleStartWashing();
+                break;
 
-        case STARTS_COUNTDOWN:
-            handleStartsCountdown();
-            break;
+            case STARTS_COUNTDOWN:
+                handleStartsCountdown();
+                break;
 
-        case ENDS_COUNTDOWN:
-            handleEndsCountdown();
-            break;
+            case ENDS_COUNTDOWN:
+                handleEndsCountdown();
+                break;
 
-        case ERROR:
-            handleError();
-            break;
+            case ERROR:
+                handleError();
+                break;
+            }
         }
     }
+    else
+        Serial.println("WashingTask::tick()::getDependency(0) is nullptr");
 }
 
 void WashingTask::printWashingCompletedMessage()
@@ -60,8 +71,6 @@ void WashingTask::handleStartWashing()
 
 void WashingTask::handleStartsCountdown()
 {
-    // this->countDownTask->tick();
-    // this->temperatureTask->tick();
     if (this->elapsedTime() >= checkInterval)
     {
         this->resetTime();

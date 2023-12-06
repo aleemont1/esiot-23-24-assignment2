@@ -7,6 +7,7 @@ CountDown::CountDown(int countDown) : Task()
     this->lcd = new LCD(0x27, 16, 2);
     this->resetCountDown(N3);
     this->init(1000);
+    this->setActive(false);
 }
 
 int CountDown::getCountDown()
@@ -50,7 +51,9 @@ void CountDown::startCountDown()
 void CountDown::printCountDown()
 {
     int count = getCountDown();
-    lcd->write(("Countdown: " + String(count)).c_str(), 0, 0);
+    char buffer[3];
+    sprintf(buffer, "%02d", count);
+    lcd->write(("Countdown: " + String(buffer)).c_str(), 0, 0);
 }
 
 void CountDown::endsCountDown()

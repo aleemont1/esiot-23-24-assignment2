@@ -32,6 +32,7 @@ public:
      */
     void tick() override;
 
+private:
     /**
      * @brief Handles the turning on of the L3 LED.
      *
@@ -46,7 +47,6 @@ public:
      */
     void handleOpensGate();
 
-private:
     /**
      * @brief Enum for the possible states of the task.
      *
@@ -57,13 +57,12 @@ private:
         OPENS_GATE, ///< The task is currently opening the gate.
     };
 
-    Led *L3;                           ///< Pointer to the L3 LED object
-    Sonar *sonar;                      ///< Pointer to the sonar object
-    ServoImpl *gate;                   ///< Pointer to the ServoImpl object that controls the gate.
-    float distance;                    ///< The current distance read from the sonar sensor.
-    unsigned long timeInExit = 0;      ///< The time in milliseconds when the car entered the exit area.
-    const int GATE_OPEN_POSITION = 90; ///< The position of the gate when it is open.
-    const int GATE_CLOSE_POSITION = 0; ///< The position of the gate when it is closed.
+    Led *L3;                       ///< Pointer to the L3 LED object
+    Sonar *sonar;                  ///< Pointer to the sonar object
+    ServoImpl *gate;               ///< Pointer to the ServoImpl object that controls the gate.
+    float distance;                ///< The current distance read from the sonar sensor.
+    const int GATE_OPEN_POSITION;  ///< The position of the gate when it is open.
+    const int GATE_CLOSE_POSITION; ///< The position of the gate when it is closed.
 };
 
 #endif // __CHECK_OUT_TASK__

@@ -33,6 +33,7 @@ public:
      */
     void tick() override;
 
+private:
     /**
      * @brief Handles the reading of the distance from the sonar sensor.
      *
@@ -61,7 +62,6 @@ public:
      */
     void handleSwitchOffL3();
 
-private:
     /**
      * @brief Enum for the possible states of the task.
      *

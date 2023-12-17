@@ -5,7 +5,7 @@ TemperatureTask::TemperatureTask()
       voltageConversionFactor(30),
       voltageOffset(0.5)
 {
-    Serial.println("TemperatureTask created");
+    // Serial.println(F("TemperatureTask created"));
     this->lcd = new LCD(0x27, 16, 2);
     this->setTemperature(this->getTemperature());
     this->init(1000);
@@ -61,12 +61,12 @@ bool TemperatureTask::checkForCriticalTemperature()
 
 void TemperatureTask::criticalTemperatureReachedMessage()
 {
-    Serial.println("Critical temperature reached!");
+    // Serial.println(F("Critical temperature reached!"));
 }
 
 void TemperatureTask::temperatureMaintenanceMessage()
 {
-    // Serial.println("Detected a Problem - Please Wait");
+    // // Serial.println(F("Detected a Problem - Please Wait"));
     lcd->write("Detected a Problem - Please Wait: ", 0, 0);
 }
 

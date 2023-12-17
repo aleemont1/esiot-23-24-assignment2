@@ -145,7 +145,7 @@ def start_serial():
     global serialInst
     serialInst = serial.Serial()
     serialInst.baudrate = 9600
-    serialInst.port = 'COM3' #COM3 depends on the port where Arduino is connected
+    serialInst.port = '/dev/ttyACM0' #COM3 depends on the port where Arduino is connected
     serialInst.open()
     root.after(100, update_serial)
 

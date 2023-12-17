@@ -5,7 +5,7 @@ CheckOutTask::CheckOutTask()
       GATE_OPEN_POSITION(90),
       GATE_CLOSE_POSITION(0)
 {
-    Serial.println("CheckOutTask created");
+    // Serial.println(F("CheckOutTask created"));
     this->sonar = new Sonar(SONAR_TRIG_PIN, SONAR_ECHO_PIN, SONAR_MAX_TIME);
     this->L3 = new Led(L3_PIN);
     this->gate = new ServoImpl(SERVO_PIN);
@@ -39,13 +39,13 @@ void CheckOutTask::tick()
 void CheckOutTask::handleTurnOnL3()
 {
     this->L3->switchOn();
-    Serial.println("CheckOutTask::L3 turned on");
+    // Serial.println(F("CheckOutTask::L3 turned on"));
     this->setState(OPENS_GATE);
 }
 
 void CheckOutTask::handleOpensGate()
 {
     this->gate->write(GATE_OPEN_POSITION);
-    Serial.println("CheckOutTask::Gate opened");
+    // Serial.println(F("CheckOutTask::Gate opened"));
     this->setCompleted();
 }

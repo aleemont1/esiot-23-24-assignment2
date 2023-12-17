@@ -5,7 +5,7 @@ WashingTask::WashingTask(BlinkTask *blinkTask,
                          TemperatureTask *temperatureTask)
     : DependantTaskWithState()
 {
-    Serial.println("WashingTask created");
+    // Serial.println(F("WashingTask created"));
     this->L2 = new Led(L2_PIN);
     this->L3 = new Led(L3_PIN);
     this->tempSensor = new Temp(TMP_PIN);
@@ -96,7 +96,6 @@ void WashingTask::handleError()
     this->countDownTask->pauseCountDown();
     this->temperatureTask->criticalTemperatureReachedMessage();
     this->temperatureTask->temperatureMaintenanceMessage();
-    this->serialReceiver->simulateReadData(); // TODO: remove, but now simulate receiving "mnt:done"
     if (serialReceiver->readData() == true)
     {
         this->countDownTask->resumeCountDown();

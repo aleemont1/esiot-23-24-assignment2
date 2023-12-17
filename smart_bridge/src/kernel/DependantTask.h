@@ -30,7 +30,7 @@ public:
     {
         if (nDependencies <= MAX_DEPENDENCIES)
         {
-            Serial.println("DependantTask::addDependency()");
+            // Serial.println(F("DependantTask::addDependency()"));
             this->dependencies[nDependencies++] = dependency;
         }
     }

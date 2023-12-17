@@ -15,7 +15,8 @@ void LCD::clear()
 
 void LCD::write(const char *string, int start_col, int start_rows)
 {
-    Serial.println("LCD::Sto scrivendo sul display" + String(string));
+    // Serial.print(F("LCD::Sto scrivendo sul display "));
+    // Serial.println(String(string));
     lcd.setCursor(start_col, start_rows);
     lcd.print(string);
 }

@@ -25,7 +25,7 @@ public:
         this->gate = new ServoImpl(SERVO_PIN);
         this->init();
         this->setState(STARTED);
-        Serial.println("CheckInTask created");
+        // Serial.println(F("CheckInTask created"));
     };
     void tick() override;
 

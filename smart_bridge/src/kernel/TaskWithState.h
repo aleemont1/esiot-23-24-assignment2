@@ -14,11 +14,10 @@
 class TaskWithState : public TaskWithTimer
 {
 public:
-    TaskWithState() : TaskWithTimer(), previousState(0){}; // Default constructor
+    TaskWithState() : TaskWithTimer(){}; // Default constructor
 
     void setState(const int state)
     {
-        this->previousState = this->state;
         this->state = state;
         this->stateTimestamp = millis();
     }
@@ -28,13 +27,7 @@ public:
         return this->state;
     }
 
-    int getPreviousState()
-    {
-        return this->previousState;
-    }
-
 private:
-    int previousState;
     int state;
     long stateTimestamp;
 };

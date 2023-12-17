@@ -11,7 +11,7 @@ void CheckInTask::tick()
         lcd->write("SMART WASHING", 0, 1);
         L1->switchOn(); // Turn on L1
 #ifdef __LOG
-        Serial.println("CheckInTask::Turned on L1");
+        // Serial.println(F("CheckInTask::Turned on L1"));
 #endif
         this->resetTime(); // Reset the elapsed time
         this->setState(WAITING); // Set the state to WAITING
@@ -21,11 +21,11 @@ void CheckInTask::tick()
         {
             L1->switchOff(); // Turn off L1
 #ifdef __LOG
-            Serial.println("CheckInTask::Turned off L1");
+            // Serial.println(F("CheckInTask::Turned off L1"));
 #endif
             gate->write(90); // Open the gate
 #ifdef __LOG
-            Serial.println("CheckInTask::Opened the gate");
+            // Serial.println(F("CheckInTask::Opened the gate"));
 #endif
             this->setCompleted(); // Mark the task as completed
         }
